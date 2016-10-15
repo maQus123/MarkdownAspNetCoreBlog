@@ -1,0 +1,12 @@
+﻿@model MarkdownAspNetCoreBlog.Models.Post
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div>
+    <a asp-route="index" title="go back" role="button">Zurück</a>
+</div>
+
+<h3>@Model.Title</h3>
+<md>@Model.Content</md>

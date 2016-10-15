@@ -1,0 +1,18 @@
+﻿@model IEnumerable<MarkdownAspNetCoreBlog.Models.Post>
+
+@{
+    ViewData["Title"] = "Markdown ASP.NET Core Blog";
+}
+
+<a asp-route="create">Neuen Blogpost</a>
+
+<ul>
+    @foreach (var post in Model) {
+        <li>
+            <a asp-route="details"
+               asp-route-year="@post.CreatedAt.Year.ToString()"
+               asp-route-month="@post.CreatedAt.Month.ToString("00")"
+               asp-route-slug="@post.Slug()">@post.Title</a>
+        </li>
+    }
+</ul>

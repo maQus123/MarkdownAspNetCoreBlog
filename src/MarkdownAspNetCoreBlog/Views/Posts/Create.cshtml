@@ -1,0 +1,19 @@
+﻿@model MarkdownAspNetCoreBlog.Models.Post
+
+@{
+    ViewData["Title"] = "Neuen Blogpost";
+}
+
+<div>
+    <a asp-route="index" title="go back" role="button">Zurück</a>
+</div>
+
+<form asp-action="Create">
+    <label asp-for="Title"></label>
+    <input type="text" asp-for="Title" />
+    <br />
+    <label asp-for="Content"></label>
+    <textarea asp-for="Content"></textarea>
+    <br />
+    <button type="submit">Speichern</button>
+</form>
