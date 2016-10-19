@@ -1,10 +1,10 @@
 ﻿@model MarkdownAspNetCoreBlog.Models.Post
 
 @{
-    ViewData["Title"] = Model.Title;
+    ViewData["Title"] = "Post lesen: " + Model.Title;
 }
 
-<a asp-route="index">Startseite</a>
+<a asp-route="list">Zurück</a>
 
 <article>
     <header>

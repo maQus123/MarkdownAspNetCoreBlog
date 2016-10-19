@@ -1,10 +1,10 @@
 ﻿@model MarkdownAspNetCoreBlog.Models.Post
 
 @{
-    ViewData["Title"] = "Neuer Post";
+    ViewData["Title"] = "Post editieren: " + Model.Title;
 }
 
-<form asp-action="Create">
+<form asp-action="Update">
     <label asp-for="Title"></label><br />
     <input type="text" asp-for="Title" required="required" />
     <br />

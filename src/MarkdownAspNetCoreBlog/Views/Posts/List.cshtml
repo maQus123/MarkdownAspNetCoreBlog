@@ -1,0 +1,13 @@
+﻿@model IEnumerable<MarkdownAspNetCoreBlog.Models.Post>
+
+@{
+    ViewData["Title"] = "Posts verwalten";
+}
+
+<a asp-route="index">Startseite</a> | <a asp-route="create">Neuen Post</a>
+
+<ul>
+    @foreach (var post in Model) {
+        <li>@post.Title (<a asp-route="read" asp-route-id="@post.Id">Lesen</a> | <a asp-route="update" asp-route-id="@post.Id">Bearbeiten</a>)</li>
+    }
+</ul>

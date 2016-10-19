@@ -1,12 +1,18 @@
 ﻿namespace MarkdownAspNetCoreBlog.Models {
 
     using System;
+    using System.ComponentModel.DataAnnotations;
     using System.Text.RegularExpressions;
 
     public class Post {
 
+        public int Id { get; set; }
+
+        [Required]
+        [StringLength(60)]
         public string Title { get; set; }
 
+        [Required]
         public string Content { get; set; }
 
         public DateTimeOffset CreatedAt { get; set; }
