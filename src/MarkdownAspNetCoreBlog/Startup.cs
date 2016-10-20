@@ -18,8 +18,8 @@
         }
 
         public void Configure(IApplicationBuilder app) {
-            app.UseStaticFiles();
             app.UseDefaultFiles();
+            app.UseStaticFiles();
             app.UseMvc(m => {
                 m.MapRoute(
                     name: "index",

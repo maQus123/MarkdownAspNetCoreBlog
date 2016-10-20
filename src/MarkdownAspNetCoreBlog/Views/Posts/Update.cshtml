@@ -5,16 +5,14 @@
 }
 
 <form asp-action="Update">
+
     <label asp-for="Title"></label><br />
     <input type="text" asp-for="Title" required="required" />
     <br />
     <label asp-for="Content"></label><br />
-    <textarea asp-for="Content" id="markdown"></textarea>
+    <textarea asp-for="Content"></textarea>
     <br />
     <button type="submit">Speichern</button>
     <a asp-route="list" role="button">Abbrechen</a>
-</form>
 
-<script>
-    var simplemde = new SimpleMDE({ element: document.getElementById("markdown") });
-</script>
+</form>
