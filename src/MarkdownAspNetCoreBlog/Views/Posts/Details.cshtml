@@ -2,16 +2,20 @@
 
 @{
     ViewData["Title"] = Model.Title;
+    ViewData["indexNavCss"] = "blog-nav-item";
+    ViewData["listNavCss"] = "blog-nav-item";
 }
 
-<a asp-route="index">Startseite</a>
-
-<article>
-    <header>
-        <h1>@Model.Title</h1>
-    </header>
-    <md>@Model.Content</md>
-    <footer>
-        @Model.CreatedAt.ToString()
-    </footer>
-</article>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+            <div class="blog-post">
+                <h2 class="blog-post-title">@Model.Title</h2>
+                <p class="blog-post-meta">@Model.CreatedAt.ToString("d MMMM yyyy") von <a href="#">maQus</a></p>
+                <md>@Model.Content</md>
+            </div>
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+        </div>
+    </div>
+</div>

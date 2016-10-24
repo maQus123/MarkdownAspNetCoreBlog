@@ -12,7 +12,17 @@
     <link href="~/css/bootstrap-markdown.min.css" rel="stylesheet" />
 </head>
 <body>
-    <main>@RenderBody()</main>
+    <div class="blog-masthead">
+        <div class="container">
+            <nav class="blog-nav">
+                <a asp-route="index" class="@ViewData["indexNavCss"]">Home</a>
+                <a asp-route="list" class="@ViewData["listNavCss"]">Verwaltung</a>
+            </nav>
+        </div>
+    </div>
+    <main>
+        @RenderBody()
+    </main>
     <script src="~/js/jquery.min.js"></script>
     <script src="~/js/bootstrap.min.js"></script>
     <script src="~/js/bootstrap-markdown.js"></script>

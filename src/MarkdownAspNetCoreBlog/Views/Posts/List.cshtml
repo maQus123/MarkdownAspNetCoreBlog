@@ -2,9 +2,11 @@
 
 @{
     ViewData["Title"] = "Posts verwalten";
+    ViewData["indexNavCss"] = "blog-nav-item";
+    ViewData["listNavCss"] = "blog-nav-item active";
 }
 
-<a asp-route="index">Startseite</a> | <a asp-route="create">Neuen Post</a>
+<a asp-route="create">Neuen Post</a>
 
 <ul>
     @foreach (var post in Model) {
