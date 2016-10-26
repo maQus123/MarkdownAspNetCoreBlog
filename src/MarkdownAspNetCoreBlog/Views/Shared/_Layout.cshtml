@@ -12,14 +12,14 @@
     <link href="~/css/bootstrap-markdown.min.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="blog-masthead">
+    <nav class="blog-masthead">
         <div class="container">
             <nav class="blog-nav">
                 <a asp-route="index" class="@ViewData["indexNavCss"]">Home</a>
                 <a asp-route="list" class="@ViewData["listNavCss"]">Verwaltung</a>
             </nav>
         </div>
-    </div>
+    </nav>
     <main>
         @RenderBody()
     </main>

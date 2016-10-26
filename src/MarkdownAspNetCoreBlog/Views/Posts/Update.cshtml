@@ -3,18 +3,20 @@
 @{
     ViewData["Title"] = "Post editieren: " + Model.Title;
     ViewData["indexNavCss"] = "blog-nav-item";
-    ViewData["listNavCss"] = "blog-nav-item";
+    ViewData["listNavCss"] = "blog-nav-item active";
 }
 
-<form asp-action="Update">
-
-    <label asp-for="Title"></label><br />
-    <input type="text" asp-for="Title" required="required" />
-    <br />
-    <label asp-for="Content"></label><br />
-    <textarea asp-for="Content"></textarea>
-    <br />
-    <button type="submit">Speichern</button>
-    <a asp-route="list" role="button">Abbrechen</a>
-
-</form>
+<div class="container">
+    <form asp-action="Update">
+        <div class="form-group">
+            <label asp-for="Title"></label>
+            <input type="text" class="form-control" asp-for="Title" required="required" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Content"></label>
+            <textarea class="form-control" asp-for="Content" data-provide="markdown" rows="10"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Speichern</button>
+        <a asp-route="list" role="button" class="btn btn-default">Abbrechen</a>
+    </form>
+</div>

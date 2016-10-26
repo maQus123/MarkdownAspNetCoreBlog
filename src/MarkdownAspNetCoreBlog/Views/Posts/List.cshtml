@@ -6,10 +6,24 @@
     ViewData["listNavCss"] = "blog-nav-item active";
 }
 
-<a asp-route="create">Neuen Post</a>
-
-<ul>
-    @foreach (var post in Model) {
-        <li>@post.Title (<a asp-route="read" asp-route-id="@post.Id">Lesen</a> | <a asp-route="update" asp-route-id="@post.Id">Bearbeiten</a>)</li>
-    }
-</ul>
+<div class="container">
+    <table class="table">
+        <tr>
+            <th>Nr.</th>
+            <th>Title</th>
+            <th>Datum</th>
+            <td></td>
+        </tr>
+        @{int i = 1;}
+        @foreach (var post in Model) {
+            <tr>
+                <td>@i</td>
+                <td>@post.Title</td>
+                <td>@post.CreatedAt.ToString("d MM yyyy hh:mm")</td>
+                <td><a asp-route="update" asp-route-id="@post.Id">Bearbeiten</a></td>
+            </tr>
+            i++;
+        }
+    </table>
+    <a class="btn btn-primary" asp-route="create" role="button">Neuen Post</a>
+</div>

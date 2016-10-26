@@ -35,10 +35,6 @@
                     template: "posts/create",
                     defaults: new { controller = "Posts", action = "Create" });
                 m.MapRoute(
-                    name: "read",
-                    template: "posts/details/{id:int}",
-                    defaults: new { controller = "Posts", action = "Read" });
-                m.MapRoute(
                     name: "update",
                     template: "posts/edit/{id:int}",
                     defaults: new { controller = "Posts", action = "Update" });
