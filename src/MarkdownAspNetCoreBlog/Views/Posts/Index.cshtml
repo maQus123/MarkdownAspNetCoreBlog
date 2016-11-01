@@ -1,41 +1,11 @@
 ﻿@model IEnumerable<MarkdownAspNetCoreBlog.Models.Post>
 
 @{
-    ViewData["Title"] = "Markdown ASP.NET Core Blog";
-    ViewData["indexNavCss"] = "blog-nav-item active";
-    ViewData["listNavCss"] = "blog-nav-item";
+    ViewData["Title"] = "maQus Blog";
 }
 
-<div class="container">
-    <div class="blog-header">
-        <h1 class="blog-title">Markdown ASP.NET Core Blog</h1>
-        <p class="lead blog-description">Mein Blog basierend auf ASP.NET Core und der Markdown-Syntax.</p>
-    </div>
-    <div class="row">
-        <div class="col-sm-8 blog-main">
-            @foreach (var post in Model) {
-                <div class="blog-post">
-                    <h2 class="blog-post-title"><a asp-route="details" asp-route-year="@post.CreatedAt.Year.ToString()" asp-route-month="@post.CreatedAt.Month.ToString("00")" asp-route-slug="@post.Slug()">@post.Title</a></h2>
-                    <p class="blog-post-meta">@post.CreatedAt.ToString("d MMMM yyyy") von <a href="#">maQus</a></p>
-                    <md>@post.Content</md>
-                </div>
-            }
-        </div>
-        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-            <div class="sidebar-module sidebar-module-inset">
-                <h4>About</h4>
-                <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-            </div>
-            <div class="sidebar-module">
-                <h4>Archives</h4>
-                <ol class="list-unstyled">
-                    <li><a href="#">March 2014</a></li>
-                    <li><a href="#">February 2014</a></li>
-                    <li><a href="#">January 2014</a></li>
-                    <li><a href="#">December 2013</a></li>
-                    <li><a href="#">November 2013</a></li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
+@foreach (var post in Model) {
+    <h2><a asp-route="details" asp-route-year="@post.CreatedAt.Year.ToString()" asp-route-month="@post.CreatedAt.Month.ToString("00")" asp-route-slug="@post.Slug()">@post.Title</a></h2>
+    <p>@post.CreatedAt.ToString("d. MMMM yyyy") von <a href="#">maQus</a></p>
+    <md>@post.Content</md>
+}

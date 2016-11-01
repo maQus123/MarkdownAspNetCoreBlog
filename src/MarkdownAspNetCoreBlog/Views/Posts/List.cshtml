@@ -2,28 +2,25 @@
 
 @{
     ViewData["Title"] = "Posts verwalten";
-    ViewData["indexNavCss"] = "blog-nav-item";
-    ViewData["listNavCss"] = "blog-nav-item active";
 }
 
-<div class="container">
-    <table class="table">
+
+<table>
+    <tr>
+        <th>Nr.</th>
+        <th>Title</th>
+        <th>Datum</th>
+        <td></td>
+    </tr>
+    @{int i = 1;}
+    @foreach (var post in Model) {
         <tr>
-            <th>Nr.</th>
-            <th>Title</th>
-            <th>Datum</th>
-            <td></td>
+            <td>@i</td>
+            <td>@post.Title</td>
+            <td>@post.CreatedAt.ToString("d MM yyyy hh:mm")</td>
+            <td><a asp-route="update" asp-route-id="@post.Id">Bearbeiten</a></td>
         </tr>
-        @{int i = 1;}
-        @foreach (var post in Model) {
-            <tr>
-                <td>@i</td>
-                <td>@post.Title</td>
-                <td>@post.CreatedAt.ToString("d MM yyyy hh:mm")</td>
-                <td><a asp-route="update" asp-route-id="@post.Id">Bearbeiten</a></td>
-            </tr>
-            i++;
-        }
-    </table>
-    <a class="btn btn-primary" asp-route="create" role="button">Neuen Post</a>
-</div>
+        i++;
+    }
+</table>
+<a class="btn btn-primary" asp-route="create" role="button">Neuen Post</a>

@@ -2,7 +2,6 @@
 
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     public class PostRepository {
 
@@ -14,16 +13,12 @@
 
         public void Add(Post post) {
             post.CreatedAt = new DateTimeOffset(DateTime.UtcNow);
-            int id = 1;
-            if (PostRepository.posts.Count != 0) {
-                id = PostRepository.posts.Max(t => t.Id) + 1;
-            }            
-            post.Id = id;
+            post.Id = Guid.NewGuid();
             PostRepository.posts.Add(post);
             return;
         }
 
-        public Post Find(int id) {
+        public Post Find(Guid id) {
             Post existingPost = null;
             foreach (var post in PostRepository.posts) {
                 if (post.Id == id) {
@@ -50,7 +45,7 @@
             return PostRepository.posts;
         }
 
-        public void Update(int id, Post post) {
+        public void Update(Guid id, Post post) {
             foreach (var existingPost in PostRepository.posts) {
                 if (id == existingPost.Id) {
                     existingPost.Title = post.Title;

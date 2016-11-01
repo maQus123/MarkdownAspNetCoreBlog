@@ -2,6 +2,7 @@
 
     using Microsoft.AspNetCore.Mvc;
     using Models;
+    using System;
 
     public class PostsController : Controller {
 
@@ -51,13 +52,13 @@
         }
 
         [HttpGet]
-        public IActionResult Update(int id) {
+        public IActionResult Update(Guid id) {
             return this.GetPost(id);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(int id, [Bind("Id, Title,Content")] Post post) {
+        public IActionResult Update(Guid id, [Bind("Id, Title,Content")] Post post) {
             if (id != post.Id) {
                 return NotFound();
             } else {
@@ -70,12 +71,7 @@
             }
         }
 
-        [HttpGet]
-        public IActionResult Read(int id) {
-            return this.GetPost(id);
-        }
-
-        private IActionResult GetPost(int id) {
+        private IActionResult GetPost(Guid id) {
             var existingPost = this.PostRepository.Find(id);
             if (null != existingPost) {
                 return View(existingPost);

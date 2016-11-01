@@ -2,19 +2,17 @@
 
 @{
     ViewData["Title"] = "Neuer Post";
-    ViewData["indexNavCss"] = "blog-nav-item";
-    ViewData["listNavCss"] = "blog-nav-item active";
 }
 
 <div class="container">
-    <form asp-action="Create">
+    <form method="post" asp-action="Create">
         <div class="form-group">
             <label asp-for="Title"></label>
             <input type="text" class="form-control" asp-for="Title" required="required" />
         </div>
         <div class="form-group">
             <label asp-for="Content"></label>
-            <textarea class="form-control" asp-for="Content" data-provide="markdown" rows="10"></textarea>
+            <textarea class="form-control" asp-for="Content" rows="10"></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Speichern</button>
         <a asp-route="list" role="button" class="btn btn-default">Abbrechen</a>
