@@ -10,7 +10,6 @@
 
         public void ConfigureServices(IServiceCollection services) {
             services.AddMvc();
-            //services.AddSingleton<PostRepository>();
             services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase());
             services.Configure<RouteOptions>(options => {
                 options.AppendTrailingSlash = true;
@@ -33,17 +32,25 @@
                     constraints: new { year = @"\d{4}", month = @"\d{2}", slug = @"^[a-z0-9-]+$" },
                     defaults: new { controller = "Posts", action = "Details" });
                 m.MapRoute(
-                    name: "create",
+                    name: "create-post",
                     template: "posts/create",
                     defaults: new { controller = "Posts", action = "Create" });
                 m.MapRoute(
-                    name: "update",
+                    name: "update-post",
                     template: "posts/edit/{id:guid}",
                     defaults: new { controller = "Posts", action = "Update" });
                 m.MapRoute(
-                    name: "list",
+                    name: "list-posts",
                     template: "posts",
                     defaults: new { controller = "Posts", action = "List" });
+                m.MapRoute(
+                    name: "create-image",
+                    template: "images/create",
+                    defaults: new { controller = "Images", action = "Create" });
+                m.MapRoute(
+                    name: "list-images",
+                    template: "images",
+                    defaults: new { controller = "Images", action = "List" });
             });
             return;
         }

@@ -1,0 +1,19 @@
+﻿@model IEnumerable<MarkdownAspNetCoreBlog.Models.Image>
+
+@{
+    ViewData["Title"] = "Bilder verwalten";
+}
+
+<div class="row">
+    @{int i = 1;}
+    @foreach (var image in Model) {
+        <div class="col-xs-6 col-md-3">
+            <a href="#" class="thumbnail">
+                <img src="~/img/@image.Name" alt="@image.Name" asp-append-version="true">
+            </a>
+        </div>
+        i++;
+    }
+</div>
+
+<a class="btn btn-primary" asp-route="create-image" role="button">Neues Bild</a>
