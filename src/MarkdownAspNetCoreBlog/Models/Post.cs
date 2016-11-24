@@ -17,6 +17,8 @@
 
         public DateTimeOffset CreatedAt { get; set; }
 
+        public bool IsPublished { get; set; }
+
         public string Slug() {
             string slug = this.Title.ToLower();
             slug = Regex.Replace(slug, "ö", "oe");

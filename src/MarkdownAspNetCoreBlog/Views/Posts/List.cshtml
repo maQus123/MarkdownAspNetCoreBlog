@@ -10,6 +10,7 @@
         <th>Nr.</th>
         <th>Title</th>
         <th>Datum</th>
+        <th>Veröffentlicht</th>
         <td></td>
     </tr>
     @{int i = 1;}
@@ -18,6 +19,7 @@
             <td>@i</td>
             <td>@post.Title</td>
             <td>@post.CreatedAt.ToString("d MM yyyy hh:mm")</td>
+            <td>@post.IsPublished.ToString()</td>
             <td><a asp-route="update" asp-route-id="@post.Id">Bearbeiten</a></td>
         </tr>
         i++;

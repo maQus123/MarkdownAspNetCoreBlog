@@ -15,13 +15,18 @@
 
         [HttpGet]
         public IActionResult Index() {
-            var posts = this.dataContext.Posts.OrderBy(p => p.CreatedAt).ToList();
+            var posts = this.dataContext.Posts
+                .Where(p => p.IsPublished)
+                .OrderBy(p => p.CreatedAt)
+                .ToList();
             return View(posts);
         }
 
         [HttpGet]
         public IActionResult List() {
-            var posts = this.dataContext.Posts.OrderBy(p => p.CreatedAt).ToList();
+            var posts = this.dataContext.Posts
+                .OrderBy(p => p.CreatedAt)
+                .ToList();
             return View(posts);
         }
 
@@ -30,7 +35,7 @@
             if (!string.IsNullOrWhiteSpace(year) && !string.IsNullOrWhiteSpace(month) && !string.IsNullOrWhiteSpace(slug)) {
                 var date = string.Concat(year, month);
                 var post = this.dataContext.Posts.Single(p => p.Slug() == slug && p.CreatedAt.ToString("yyyyMM") == date);
-                if (null != post) {
+                if (null != post && post.IsPublished) {
                     return View(post);
                 }
             }
@@ -44,7 +49,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Title,Content")] Post post) {
+        public IActionResult Create([Bind("Title,Content,IsPublished")] Post post) {
             if (ModelState.IsValid) {
                 post.CreatedAt = new DateTimeOffset(DateTime.UtcNow);
                 post.Id = Guid.NewGuid();
@@ -67,7 +72,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(Guid id, [Bind("Id, Title,Content")] Post post) {
+        public IActionResult Update(Guid id, [Bind("Id,Title,Content,IsPublished")] Post post) {
             if (id != post.Id) {
                 return NotFound();
             } else {
@@ -76,6 +81,7 @@
                     if (null != existingPost) {
                         existingPost.Title = post.Title;
                         existingPost.Content = post.Content;
+                        existingPost.IsPublished = post.IsPublished;
                         this.dataContext.SaveChanges();
                         return RedirectToAction("List");
                     } else {
