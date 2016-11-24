@@ -3,31 +3,33 @@
     using Microsoft.AspNetCore.Mvc;
     using Models;
     using System;
+    using System.Linq;
 
     public class PostsController : Controller {
 
-        public PostRepository PostRepository { get; set; }
+        private DataContext dataContext;
 
-        public PostsController(PostRepository postRepository) {
-            this.PostRepository = postRepository;
+        public PostsController(DataContext dataContext) {
+            this.dataContext = dataContext;
         }
 
         [HttpGet]
         public IActionResult Index() {
-            var posts = this.PostRepository.GetAll();
+            var posts = this.dataContext.Posts.OrderBy(p => p.CreatedAt).ToList();
             return View(posts);
         }
 
         [HttpGet]
         public IActionResult List() {
-            var posts = this.PostRepository.GetAll();
+            var posts = this.dataContext.Posts.OrderBy(p => p.CreatedAt).ToList();
             return View(posts);
         }
 
         [HttpGet]
         public IActionResult Details(string year, string month, string slug) {
             if (!string.IsNullOrWhiteSpace(year) && !string.IsNullOrWhiteSpace(month) && !string.IsNullOrWhiteSpace(slug)) {
-                Post post = this.PostRepository.Find(year, month, slug);
+                var date = string.Concat(year, month);
+                var post = this.dataContext.Posts.Single(p => p.Slug() == slug && p.CreatedAt.ToString("yyyyMM") == date);
                 if (null != post) {
                     return View(post);
                 }
@@ -44,16 +46,23 @@
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Title,Content")] Post post) {
             if (ModelState.IsValid) {
-                this.PostRepository.Add(post);
+                post.CreatedAt = new DateTimeOffset(DateTime.UtcNow);
+                post.Id = Guid.NewGuid();
+                this.dataContext.Posts.Add(post);
+                this.dataContext.SaveChanges();
                 return RedirectToAction("List");
             } else {
                 return View(post);
-            }                        
+            }
         }
 
         [HttpGet]
         public IActionResult Update(Guid id) {
-            return this.GetPost(id);
+            var post = this.dataContext.Posts.Single(p => p.Id == id);
+            if (null != post) {
+                return View(post);
+            }
+            return NotFound();
         }
 
         [HttpPost]
@@ -63,20 +72,18 @@
                 return NotFound();
             } else {
                 if (ModelState.IsValid) {
-                    this.PostRepository.Update(id, post);
-                    return RedirectToAction("List");
+                    var existingPost = this.dataContext.Posts.Single(p => p.Id == id);
+                    if (null != existingPost) {
+                        existingPost.Title = post.Title;
+                        existingPost.Content = post.Content;
+                        this.dataContext.SaveChanges();
+                        return RedirectToAction("List");
+                    } else {
+                        return NotFound();
+                    }
                 } else {
                     return View(post);
                 }
-            }
-        }
-
-        private IActionResult GetPost(Guid id) {
-            var existingPost = this.PostRepository.Find(id);
-            if (null != existingPost) {
-                return View(existingPost);
-            } else {
-                return NotFound();
             }
         }
 

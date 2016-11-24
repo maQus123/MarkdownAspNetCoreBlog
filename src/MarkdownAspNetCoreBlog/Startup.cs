@@ -2,6 +2,7 @@
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Routing;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Models;
 
@@ -9,7 +10,8 @@
 
         public void ConfigureServices(IServiceCollection services) {
             services.AddMvc();
-            services.AddSingleton<PostRepository>();
+            //services.AddSingleton<PostRepository>();
+            services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase());
             services.Configure<RouteOptions>(options => {
                 options.AppendTrailingSlash = true;
                 options.LowercaseUrls = true;
@@ -27,7 +29,7 @@
                     defaults: new { controller = "Posts", action = "Index" });
                 m.MapRoute(
                     name: "details",
-                    template: "{year}/{month}/{slug}/",
+                    template: "{year}/{month}/{slug}",
                     constraints: new { year = @"\d{4}", month = @"\d{2}", slug = @"^[a-z0-9-]+$" },
                     defaults: new { controller = "Posts", action = "Details" });
                 m.MapRoute(
