@@ -66,6 +66,22 @@
                     name: "delete-image-confirmed",
                     template: "images/delete/{id:guid}",
                     defaults: new { controller = "Images", action = "DeleteConfirmed" });
+                m.MapRoute(
+                    name: "create-tag",
+                    template: "tags/create",
+                    defaults: new { controller = "Tags", action = "Create" });
+                m.MapRoute(
+                    name: "list-tags",
+                    template: "tags",
+                    defaults: new { controller = "Tags", action = "List" });
+                m.MapRoute(
+                    name: "delete-tag",
+                    template: "tags/delete/{id:guid}",
+                    defaults: new { controller = "Tags", action = "Delete" });
+                m.MapRoute(
+                    name: "delete-tag-confirmed",
+                    template: "tags/delete/{id:guid}",
+                    defaults: new { controller = "Tags", action = "DeleteConfirmed" });
             });
             return;
         }

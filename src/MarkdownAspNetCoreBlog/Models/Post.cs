@@ -1,6 +1,7 @@
 ﻿namespace MarkdownAspNetCoreBlog.Models {
 
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Text.RegularExpressions;
 
@@ -18,6 +19,8 @@
         public DateTimeOffset CreatedAt { get; set; }
 
         public bool IsPublished { get; set; }
+
+        public List<PostTag> PostTags { get; set; }
 
         public string Slug() {
             string slug = this.Title.ToLower();

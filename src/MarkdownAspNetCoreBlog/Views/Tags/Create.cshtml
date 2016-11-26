@@ -1,0 +1,16 @@
+﻿@model MarkdownAspNetCoreBlog.Models.Tag
+
+@{
+    ViewData["Title"] = "Neuer Tag";
+}
+
+<div class="container">
+    <form method="post" asp-action="Create" asp-controller="Tags">
+        <div class="form-group">
+            <label>Titel</label>
+            <input type="text" class="form-control" asp-for="Title" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Speichern</button>
+        <a asp-route="list-tags" role="button" class="btn btn-default">Abbrechen</a>
+    </form>
+</div>

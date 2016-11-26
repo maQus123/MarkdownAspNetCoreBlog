@@ -1,0 +1,13 @@
+﻿@model MarkdownAspNetCoreBlog.Models.Tag
+
+@{
+    ViewData["Title"] = "Tag löschen: " + Model.Title;
+}
+
+<div class="container">
+    <form method="post" asp-action="DeleteConfirmed" asp-controller="Tags">
+        <p>Tag '@Model.Title' wirklich löschen?</p>
+        <button type="submit" class="btn btn-danger">Löschen</button>
+        <a asp-route="list-tags" role="button" class="btn btn-default">Abbrechen</a>
+    </form>
+</div>
