@@ -4,21 +4,20 @@
     ViewData["Title"] = "Bilder verwalten";
 }
 
-<div class="row">
-    @{int i = 1;}
-    @foreach (var image in Model) {
-        <div class="col-xs-6 col-md-3">
-            <div class="thumbnail">
-                <a href="~/img/@image.FileName">
-                    <img src="~/img/@image.FileName" alt="@image.DisplayName" asp-append-version="true">
-                </a>
-                <div class="caption">
-                    <h3>@image.DisplayName</h3>
+<div class="container">
+    <div class="row">
+        @{int i = 1;}
+        @foreach (var image in Model) {
+            <div class="col-xs-6 col-md-3">
+                <div class="thumbnail">
+                    <a href="~/img/@image.Name">
+                        <img src="~/img/@image.Name" alt="@image.Name" asp-append-version="true">
+                    </a>
+                    @image.Name | <a asp-route="delete-image" asp-route-id="@image.Id">Löschen</a>
                 </div>
-            </div>           
-        </div>
-        i++;
-    }
+            </div>
+            i++;
+        }
+    </div>
+    <a class="btn btn-primary" asp-route="create-image" role="button">Neues Bild</a>
 </div>
-
-<a class="btn btn-primary" asp-route="create-image" role="button">Neues Bild</a>

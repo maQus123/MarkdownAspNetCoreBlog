@@ -14,35 +14,6 @@
         }
 
         [HttpGet]
-        public IActionResult Index() {
-            var posts = this.dataContext.Posts
-                .Where(p => p.IsPublished)
-                .OrderBy(p => p.CreatedAt)
-                .ToList();
-            return View(posts);
-        }
-
-        [HttpGet]
-        public IActionResult List() {
-            var posts = this.dataContext.Posts
-                .OrderBy(p => p.CreatedAt)
-                .ToList();
-            return View(posts);
-        }
-
-        [HttpGet]
-        public IActionResult Details(string year, string month, string slug) {
-            if (!string.IsNullOrWhiteSpace(year) && !string.IsNullOrWhiteSpace(month) && !string.IsNullOrWhiteSpace(slug)) {
-                var date = string.Concat(year, month);
-                var post = this.dataContext.Posts.Single(p => p.Slug() == slug && p.CreatedAt.ToString("yyyyMM") == date);
-                if (null != post && post.IsPublished) {
-                    return View(post);
-                }
-            }
-            return NotFound();
-        }
-
-        [HttpGet]
         public IActionResult Create() {
             return View();
         }
@@ -62,38 +33,6 @@
         }
 
         [HttpGet]
-        public IActionResult Update(Guid id) {
-            var post = this.dataContext.Posts.Single(p => p.Id == id);
-            if (null != post) {
-                return View(post);
-            }
-            return NotFound();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Update(Guid id, [Bind("Id,Title,Content,IsPublished")] Post post) {
-            if (id != post.Id) {
-                return NotFound();
-            } else {
-                if (ModelState.IsValid) {
-                    var existingPost = this.dataContext.Posts.Single(p => p.Id == id);
-                    if (null != existingPost) {
-                        existingPost.Title = post.Title;
-                        existingPost.Content = post.Content;
-                        existingPost.IsPublished = post.IsPublished;
-                        this.dataContext.SaveChanges();
-                        return RedirectToAction("List");
-                    } else {
-                        return NotFound();
-                    }
-                } else {
-                    return View(post);
-                }
-            }
-        }
-
-        [HttpGet]
         public IActionResult Delete(Guid id) {
             var post = this.dataContext.Posts.Single(p => p.Id == id);
             if (null != post) {
@@ -107,9 +46,69 @@
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(Guid id) {
             var post = this.dataContext.Posts.Single(p => p.Id == id);
-            this.dataContext.Posts.Remove(post);
-            this.dataContext.SaveChanges();
-            return RedirectToAction("List");
+            if (null != post) {
+                this.dataContext.Posts.Remove(post);
+                this.dataContext.SaveChanges();
+                return RedirectToAction("List");
+            } else {
+                return NotFound();
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Details(string year, string month, string slug) {
+            var post = this.dataContext.Posts.Single(p => p.Slug() == slug && p.CreatedAt.ToString("yyyyMM") == string.Concat(year, month));
+            if (null != post && post.IsPublished) {
+                return View(post);
+            } else {
+                return NotFound();
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Index() {
+            var posts = this.dataContext.Posts
+                .Where(p => p.IsPublished)
+                .OrderBy(p => p.CreatedAt)
+                .ToList();
+            return View(posts);
+        }
+
+        [HttpGet]
+        public IActionResult List() {
+            var posts = this.dataContext.Posts
+                .OrderBy(p => p.CreatedAt)
+                .ToList();
+            return View(posts);
+        }
+
+        [HttpGet]
+        public IActionResult Update(Guid id) {
+            var post = this.dataContext.Posts.Single(p => p.Id == id);
+            if (null != post) {
+                return View(post);
+            } else {
+                return NotFound();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(Guid id, [Bind("Id,Title,Content,IsPublished")] Post post) {
+            var existingPost = this.dataContext.Posts.Single(p => p.Id == id);
+            if (null != existingPost && id == post.Id) {
+                if (ModelState.IsValid) {
+                    existingPost.Title = post.Title;
+                    existingPost.Content = post.Content;
+                    existingPost.IsPublished = post.IsPublished;
+                    this.dataContext.SaveChanges();
+                    return RedirectToAction("List");
+                } else {
+                    return View(post);
+                }
+            } else {
+                return NotFound();
+            }
         }
 
     }
