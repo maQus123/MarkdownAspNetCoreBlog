@@ -93,6 +93,25 @@
             }
         }
 
+        [HttpGet]
+        public IActionResult Delete(Guid id) {
+            var post = this.dataContext.Posts.Single(p => p.Id == id);
+            if (null != post) {
+                return View(post);
+            } else {
+                return NotFound();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(Guid id) {
+            var post = this.dataContext.Posts.Single(p => p.Id == id);
+            this.dataContext.Posts.Remove(post);
+            this.dataContext.SaveChanges();
+            return RedirectToAction("List");
+        }
+
     }
 
 }

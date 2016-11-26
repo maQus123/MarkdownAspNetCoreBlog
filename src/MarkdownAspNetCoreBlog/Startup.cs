@@ -43,6 +43,14 @@
                     template: "posts",
                     defaults: new { controller = "Posts", action = "List" });
                 m.MapRoute(
+                    name: "delete-post",
+                    template: "posts/delete/{id:guid}",
+                    defaults: new { controller = "Posts", action = "Delete" });
+                m.MapRoute(
+                    name: "delete-post-confirmed",
+                    template: "posts/delete/{id:guid}",
+                    defaults: new { controller = "Posts", action = "DeleteConfirmed" });
+                m.MapRoute(
                     name: "create-image",
                     template: "images/create",
                     defaults: new { controller = "Images", action = "Create" });
@@ -50,6 +58,10 @@
                     name: "list-images",
                     template: "images",
                     defaults: new { controller = "Images", action = "List" });
+                m.MapRoute(
+                    name: "delete-image",
+                    template: "images/delete/{id:guid}",
+                    defaults: new { controller = "Images", action = "Delete" });
             });
             return;
         }
