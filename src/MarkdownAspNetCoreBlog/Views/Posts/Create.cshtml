@@ -5,21 +5,21 @@
 }
 
 <div class="container">
-    <form method="post" asp-action="Create">
+    <form method="post" asp-action="Create" asp-controller="Posts">
         <div class="form-group">
-            <label asp-for="Title"></label>
-            <input type="text" class="form-control" asp-for="Title" required="required" />
+            <label>Titel</label>
+            <input type="text" class="form-control" asp-for="Title" required />
         </div>
         <div class="form-group">
-            <label asp-for="Content"></label>
-            <textarea class="form-control" asp-for="Content" rows="10"></textarea>
+            <label>Inhalt</label>
+            <textarea class="form-control" asp-for="Content" rows="10" required></textarea>
         </div>
         <div class="checkbox">
             <label>
-                <input type="checkbox" asp-for="IsPublished"> Publish
+                <input type="checkbox" asp-for="IsPublished"> Veröffentlichen
             </label>
         </div>
         <button type="submit" class="btn btn-primary">Speichern</button>
-        <a asp-route="list" role="button" class="btn btn-default">Abbrechen</a>
+        <a asp-route="list-posts" role="button" class="btn btn-default">Abbrechen</a>
     </form>
 </div>

@@ -8,9 +8,14 @@
     @{int i = 1;}
     @foreach (var image in Model) {
         <div class="col-xs-6 col-md-3">
-            <a href="#" class="thumbnail">
-                <img src="~/img/@image.Name" alt="@image.Name" asp-append-version="true">
-            </a>
+            <div class="thumbnail">
+                <a href="~/img/@image.FileName">
+                    <img src="~/img/@image.FileName" alt="@image.DisplayName" asp-append-version="true">
+                </a>
+                <div class="caption">
+                    <h3>@image.DisplayName</h3>
+                </div>
+            </div>           
         </div>
         i++;
     }

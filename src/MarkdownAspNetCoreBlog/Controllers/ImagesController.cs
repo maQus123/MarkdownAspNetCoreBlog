@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Models;
+    using System;
     using System.IO;
     using System.Linq;
 
@@ -20,7 +21,7 @@
         [HttpGet]
         public IActionResult List() {
             var images = this.dataContext.Images
-                .OrderBy(i => i.Name)
+                .OrderBy(i => i.FileName)
                 .ToList();
             return View(images);
         }
@@ -31,22 +32,25 @@
         }
 
         [HttpPost]
-        public IActionResult Create(IFormFile file) {
+        [ValidateAntiForgeryToken]
+        public IActionResult Create([Bind("displayName,file")] string displayName, IFormFile file) {
             var folder = Path.Combine(this.environment.WebRootPath, "img");
-            if (file.Length > 0) {
+            if (file.Length > 0 && !string.IsNullOrWhiteSpace(displayName)) {
                 using (var fileStream = new FileStream(Path.Combine(folder, file.FileName), FileMode.Create)) {
                     file.CopyTo(fileStream);
                 }
                 var image = new Image();
-                image.Name = file.FileName;
+                image.Id = Guid.NewGuid();
+                image.FileName = file.FileName;
+                image.DisplayName = displayName;
                 this.dataContext.Images.Add(image);
                 this.dataContext.SaveChanges();
                 return RedirectToAction("List");
             } else {
                 return View();
-            }            
+            }
         }
-
+        
     }
 
 }

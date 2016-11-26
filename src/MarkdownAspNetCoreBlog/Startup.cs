@@ -4,7 +4,6 @@
     using Microsoft.AspNetCore.Routing;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
-    using Models;
 
     public class Startup {
 
