@@ -22,8 +22,6 @@
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Title")] Tag tag) {
             if (ModelState.IsValid) {
-                tag.CreatedAt = new DateTimeOffset(DateTime.UtcNow);
-                tag.Id = Guid.NewGuid();
                 this.dataContext.Tags.Add(tag);
                 this.dataContext.SaveChanges();
                 return RedirectToAction("List");

@@ -2,25 +2,27 @@
 
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     using System.Text.RegularExpressions;
 
     public class Post {
 
-        public Guid Id { get; set; }
+        public Post() {
+            this.Id = Guid.NewGuid();
+            this.CreatedAt = new DateTimeOffset(DateTime.UtcNow);
+            this.PostTags = new List<PostTag>();
+        }
 
-        [Required]
-        [StringLength(60)]
+        public Guid Id { get; private set; }
+                
         public string Title { get; set; }
 
-        [Required]
         public string Content { get; set; }
 
-        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
         public bool IsPublished { get; set; }
 
-        public List<PostTag> PostTags { get; set; }
+        public List<PostTag> PostTags { get; private set; }
 
         public string Slug() {
             string slug = this.Title.ToLower();

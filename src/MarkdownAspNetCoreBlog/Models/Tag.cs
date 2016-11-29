@@ -2,18 +2,22 @@
 
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
 
     public class Tag {
 
-        public Guid Id { get; set; }
+        public Tag() {
+            this.Id = Guid.NewGuid();
+            this.CreatedAt = new DateTimeOffset(DateTime.UtcNow);
+            this.PostTags = new List<PostTag>();
+        }
 
-        [Required]
+        public Guid Id { get; private set; }
+
         public string Title { get; set; }
 
-        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
-        public List<PostTag> PostTags { get; set; }
+        public List<PostTag> PostTags { get; private set; }
 
     }
 

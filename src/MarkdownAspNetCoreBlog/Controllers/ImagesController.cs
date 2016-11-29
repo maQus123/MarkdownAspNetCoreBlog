@@ -32,8 +32,6 @@
                     file.CopyTo(fileStream);
                 }
                 var image = new Image();
-                image.Id = Guid.NewGuid();
-                image.UploadedAt = new DateTimeOffset(DateTime.UtcNow);
                 image.Name = file.FileName;
                 this.dataContext.Images.Add(image);
                 this.dataContext.SaveChanges();

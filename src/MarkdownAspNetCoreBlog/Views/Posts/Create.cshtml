@@ -1,4 +1,4 @@
-﻿@model MarkdownAspNetCoreBlog.Models.Post
+﻿@model MarkdownAspNetCoreBlog.ViewModels.PostViewModel
 
 @{
     ViewData["Title"] = "Neuer Post";
@@ -8,15 +8,19 @@
     <form method="post" asp-action="Create" asp-controller="Posts">
         <div class="form-group">
             <label>Titel</label>
-            <input type="text" class="form-control" asp-for="Title" required />
+            <input type="text" class="form-control" asp-for="@Model.Title" required />
         </div>
         <div class="form-group">
             <label>Inhalt</label>
-            <textarea class="form-control" asp-for="Content" rows="10" required></textarea>
+            <textarea class="form-control" asp-for="@Model.Content" rows="10" required></textarea>
+        </div>
+        <div class="form-group">
+            <label>Tags</label>
+            <select asp-for="@Model.SelectedTags" asp-items="@Model.AllTags" class="form-control"></select>
         </div>
         <div class="checkbox">
             <label>
-                <input type="checkbox" asp-for="IsPublished"> Veröffentlichen
+                <input type="checkbox" asp-for="@Model.IsPublished"> Veröffentlichen
             </label>
         </div>
         <button type="submit" class="btn btn-primary">Speichern</button>

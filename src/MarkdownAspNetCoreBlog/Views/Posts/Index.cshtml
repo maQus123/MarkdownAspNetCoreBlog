@@ -1,11 +1,15 @@
-﻿@model IEnumerable<MarkdownAspNetCoreBlog.Models.Post>
+﻿@model MarkdownAspNetCoreBlog.ViewModels.PostsViewModel
 
 @{
     ViewData["Title"] = "maQus Blog";
 }
 
-@foreach (var post in Model) {
+@foreach (var post in Model.Posts) {
     <h2><a asp-route="details" asp-route-year="@post.CreatedAt.Year.ToString()" asp-route-month="@post.CreatedAt.Month.ToString("00")" asp-route-slug="@post.Slug()">@post.Title</a></h2>
-    <p>@post.CreatedAt.ToString("d. MMMM yyyy") von <a href="#">maQus</a></p>
+    <p>@post.CreatedAt.ToString("d. MMMM yyyy") von <a href="#">maQus</a> - 
+    @foreach (var postTag in post.PostTags) {
+        @postTag.Tag.Title
+    }
+    </p>
     <md>@post.Content</md>
 }
