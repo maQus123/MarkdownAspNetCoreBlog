@@ -1,9 +1,9 @@
-﻿@model MarkdownAspNetCoreBlog.Models.Post
+﻿@model MarkdownAspNetCoreBlog.ViewModels.Posts.PostViewModel
 
 @{
-    ViewData["Title"] = Model.Title;
+    ViewData["Title"] = Model.Post.Title;
 }
 
-<h2>@Model.Title</h2>
-<p>@Model.CreatedAt.ToString("d. MMMM yyyy") von <a href="#">maQus</a></p>
-<md>@Model.Content</md>
+<h2>@Model.Post.Title</h2>
+<p>@Model.Post.CreatedAt.ToString("d. MMMM yyyy") von <a href="#">maQus</a></p>
+<md>@Model.Post.Content</md>

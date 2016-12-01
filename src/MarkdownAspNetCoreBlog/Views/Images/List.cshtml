@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MarkdownAspNetCoreBlog.Models.Image>
+﻿@model MarkdownAspNetCoreBlog.ViewModels.Images.ImagesViewModel
 
 @{
     ViewData["Title"] = "Bilder verwalten";
@@ -7,13 +7,13 @@
 <div class="container">
     <div class="row">
         @{int i = 1;}
-        @foreach (var image in Model) {
+        @foreach (var image in Model.Images) {
             <div class="col-xs-6 col-md-3">
                 <div class="thumbnail">
-                    <a href="~/img/@image.Name">
-                        <img src="~/img/@image.Name" alt="@image.Name" asp-append-version="true">
+                    <a href="~/@image.FolderName/@image.Name">
+                        <img src="~/@image.FolderName/@image.Name" alt="@image.Name" asp-append-version="true">
                     </a>
-                    @image.Name | <a asp-route="delete-image" asp-route-id="@image.Id">Löschen</a>
+                    @image.FolderName/@image.Name | <a asp-route="delete-image" asp-route-id="@image.Id">Löschen</a>
                 </div>
             </div>
             i++;

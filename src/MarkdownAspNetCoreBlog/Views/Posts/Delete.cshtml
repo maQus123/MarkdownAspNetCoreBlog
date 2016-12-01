@@ -1,12 +1,12 @@
-﻿@model MarkdownAspNetCoreBlog.Models.Post
+﻿@model MarkdownAspNetCoreBlog.ViewModels.Posts.PostViewModel
 
 @{
-    ViewData["Title"] = "Post löschen: " + Model.Title;
+    ViewData["Title"] = "Post löschen: " + Model.Post.Title;
 }
 
 <div class="container">
     <form method="post" asp-action="DeleteConfirmed" asp-controller="Posts">
-        <p>Post '@Model.Title' wirklich löschen?</p>
+        <p>Post '@Model.Post.Title' wirklich löschen?</p>
         <button type="submit" class="btn btn-danger">Löschen</button>
         <a asp-route="list-posts" role="button" class="btn btn-default">Abbrechen</a>
     </form>

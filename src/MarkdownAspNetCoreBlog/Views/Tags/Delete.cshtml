@@ -1,12 +1,12 @@
-﻿@model MarkdownAspNetCoreBlog.Models.Tag
+﻿@model MarkdownAspNetCoreBlog.ViewModels.Tags.TagViewModel
 
 @{
-    ViewData["Title"] = "Tag löschen: " + Model.Title;
+    ViewData["Title"] = "Tag löschen: " + Model.Tag.Title;
 }
 
 <div class="container">
     <form method="post" asp-action="DeleteConfirmed" asp-controller="Tags">
-        <p>Tag '@Model.Title' wirklich löschen?</p>
+        <p>Tag '@Model.Tag.Title' wirklich löschen?</p>
         <button type="submit" class="btn btn-danger">Löschen</button>
         <a asp-route="list-tags" role="button" class="btn btn-default">Abbrechen</a>
     </form>

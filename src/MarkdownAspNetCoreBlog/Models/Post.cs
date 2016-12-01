@@ -2,6 +2,7 @@
 
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Text.RegularExpressions;
 
     public class Post {
@@ -12,10 +13,28 @@
             this.PostTags = new List<PostTag>();
         }
 
+        public Post(Post post) {
+            this.Id = post.Id;
+            this.Title = post.Title;
+            this.Content = post.Content;
+            this.IsPublished = post.IsPublished;
+            this.CreatedAt = post.CreatedAt;
+            this.PostTags = post.PostTags;
+        }
+
+        public void UpdateFrom(Post post) {
+            this.Title = post.Title;
+            this.Content = post.Content;
+            this.IsPublished = post.IsPublished;
+            return;
+        }
+
         public Guid Id { get; private set; }
-                
+
+        [Required]
         public string Title { get; set; }
 
+        [Required]
         public string Content { get; set; }
 
         public DateTimeOffset CreatedAt { get; private set; }

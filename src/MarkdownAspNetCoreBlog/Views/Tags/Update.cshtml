@@ -1,11 +1,11 @@
 ﻿@model MarkdownAspNetCoreBlog.ViewModels.Tags.TagViewModel
 
 @{
-    ViewData["Title"] = "Neuer Tag";
+    ViewData["Title"] = "Tag editieren: " + Model.Tag.Title;
 }
 
 <div class="container">
-    <form method="post" asp-action="Create" asp-controller="Tags">
+    <form method="post" asp-action="Update" asp-controller="Tags">
         <div class="form-group">
             <label>Titel</label>
             <input type="text" class="form-control" asp-for="@Model.Tag.Title" required />

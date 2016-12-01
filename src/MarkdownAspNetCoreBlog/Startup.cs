@@ -82,6 +82,10 @@
                     name: "delete-tag-confirmed",
                     template: "tags/delete/{id:guid}",
                     defaults: new { controller = "Tags", action = "DeleteConfirmed" });
+                m.MapRoute(
+                    name: "update-tag",
+                    template: "tags/edit/{id:guid}",
+                    defaults: new { controller = "Tags", action = "Update" });
             });
             return;
         }

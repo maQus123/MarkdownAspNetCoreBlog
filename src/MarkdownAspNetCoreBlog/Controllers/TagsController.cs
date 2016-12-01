@@ -4,6 +4,7 @@
     using Models;
     using System;
     using System.Linq;
+    using ViewModels.Tags;
 
     public class TagsController : Controller {
 
@@ -20,13 +21,14 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Title")] Tag tag) {
+        public IActionResult Create([Bind("Tag")] TagViewModel viewModel) {
             if (ModelState.IsValid) {
+                var tag = new Tag(viewModel.Tag);
                 this.dataContext.Tags.Add(tag);
                 this.dataContext.SaveChanges();
                 return RedirectToAction("List");
             } else {
-                return View(tag);
+                return View(viewModel);
             }
         }
 
@@ -34,7 +36,8 @@
         public IActionResult Delete(Guid id) {
             var tag = this.dataContext.Tags.Single(t => t.Id == id);
             if (null != tag) {
-                return View(tag);
+                var viewModel = new TagViewModel(tag);
+                return View(viewModel);
             } else {
                 return NotFound();
             }
@@ -55,10 +58,34 @@
 
         [HttpGet]
         public IActionResult List() {
-            var tags = this.dataContext.Tags
-                .OrderBy(t => t.Title)
-                .ToList();
-            return View(tags);
+            var tags = this.dataContext.Tags.OrderBy(t => t.Title).ToList();
+            var viewModel = new TagsViewModel(tags);
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        public IActionResult Update(Guid id) {
+            var tag = this.dataContext.Tags.Single(t => t.Id == id);
+            if (null != tag) {
+                var viewModel = new TagViewModel(tag);
+                return View(viewModel);
+            } else {
+                return NotFound();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(Guid id, [Bind("Tag")] TagViewModel viewModel) {
+            var existingTag = this.dataContext.Tags.Single(t => t.Id == id);
+            if (null != existingTag) {
+                existingTag.UpdateFrom(viewModel.Tag);
+                this.dataContext.Tags.Update(existingTag);
+                this.dataContext.SaveChanges();
+                return RedirectToAction("List");
+            } else {
+                return View(viewModel);
+            }
         }
 
     }
