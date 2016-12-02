@@ -28,13 +28,13 @@
                     Value = tag.Id.ToString()
                 });
             }
-            var viewModel = new PostViewModel(post, allTags, new List<string>());
+            var viewModel = new CreateOrUpdatePostViewModel(post, allTags, new List<string>());
             return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Post,SelectedTags")] PostViewModel viewModel) {
+        public IActionResult Create([Bind("Post,SelectedTags")] CreateOrUpdatePostViewModel viewModel) {
             if (ModelState.IsValid) {
                 var post = new Post(viewModel.Post);
                 this.dataContext.Posts.Add(post);
@@ -57,7 +57,7 @@
         public IActionResult Delete(Guid id) {
             var post = this.dataContext.Posts.Single(p => p.Id == id);
             if (null != post) {
-                var viewModel = new PostViewModel(post, null, null);
+                var viewModel = new CreateOrUpdatePostViewModel(post, null, null);
                 return View(viewModel);
             } else {
                 return NotFound();
@@ -79,13 +79,34 @@
 
         [HttpGet]
         public IActionResult Details(string year, string month, string slug) {
-            var post = this.dataContext.Posts.Single(p => p.Slug() == slug && p.CreatedAt.ToString("yyyyMM") == string.Concat(year, month));
+            var post = this.dataContext.Posts
+                .Include(p => p.Comments)
+                .Include(p => p.PostTags)
+                .ThenInclude(p => p.Tag)
+                .Single(p => p.Slug() == slug && p.CreatedAt.ToString("yyyyMM") == string.Concat(year, month));
             if (null != post && post.IsPublished) {
-                var viewModel = new PostViewModel(post, null, null);
+                var viewModel = new DetailsPostViewModel(post, null);
                 return View(viewModel);
             } else {
                 return NotFound();
             }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Details(string year, string month, string slug, [Bind("Comment")] DetailsPostViewModel viewModel) {
+            var post = this.dataContext.Posts
+            .Include(p => p.Comments)
+            .Single(p => p.Slug() == slug && p.CreatedAt.ToString("yyyyMM") == string.Concat(year, month));
+            var comment = viewModel.Comment;
+            if (null != post && post.IsPublished && null != comment) {
+                if (!string.IsNullOrWhiteSpace(comment.AuthorName) && !string.IsNullOrWhiteSpace(comment.Content)) {
+                    post.Comments.Add(comment);
+                    this.dataContext.SaveChanges();
+                    return RedirectToAction("Details", new { year = year, month = month, slug = slug });
+                }
+            }
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -127,7 +148,7 @@
                 foreach (var postTag in post.PostTags) {
                     selectedTags.Add(postTag.TagId.ToString());
                 }
-                var viewModel = new PostViewModel(post, selectList, selectedTags);
+                var viewModel = new CreateOrUpdatePostViewModel(post, selectList, selectedTags);
                 return View(viewModel);
             } else {
                 return NotFound();
@@ -136,7 +157,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(Guid id, [Bind("Post,SelectedTags")] PostViewModel viewModel) {
+        public IActionResult Update(Guid id, [Bind("Post,SelectedTags")] CreateOrUpdatePostViewModel viewModel) {
             if (ModelState.IsValid) {
                 var post = this.dataContext.Posts.Include(p => p.PostTags).Single(p => p.Id == id);
                 if (null != post && id == post.Id) {

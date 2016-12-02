@@ -5,10 +5,13 @@
     public class PostTag {
 
         public PostTag() {
-
+            this.PostId = Guid.NewGuid();
+            this.Post = new Post();
+            this.TagId = Guid.NewGuid();
+            this.Tag = new Tag();
         }
 
-        public PostTag(Post post, Tag tag) : this() {
+        public PostTag(Post post, Tag tag) {
             this.Post = post;
             this.PostId = post.Id;
             this.Tag = tag;

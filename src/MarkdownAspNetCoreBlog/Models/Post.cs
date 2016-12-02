@@ -11,6 +11,7 @@
             this.Id = Guid.NewGuid();
             this.CreatedAt = new DateTimeOffset(DateTime.UtcNow);
             this.PostTags = new List<PostTag>();
+            this.Comments = new List<Comment>();
         }
 
         public Post(Post post) {
@@ -20,6 +21,7 @@
             this.IsPublished = post.IsPublished;
             this.CreatedAt = post.CreatedAt;
             this.PostTags = post.PostTags;
+            this.Comments = post.Comments;
         }
 
         public void UpdateFrom(Post post) {
@@ -42,6 +44,8 @@
         public bool IsPublished { get; set; }
 
         public List<PostTag> PostTags { get; private set; }
+
+        public List<Comment> Comments { get; private set; }
 
         public string Slug() {
             string slug = this.Title.ToLower();
