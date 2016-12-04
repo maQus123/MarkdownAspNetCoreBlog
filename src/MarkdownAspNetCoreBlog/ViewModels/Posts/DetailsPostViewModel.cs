@@ -5,18 +5,16 @@
     public class DetailsPostViewModel {
 
         public DetailsPostViewModel() {
-            this.Comment = new Comment();
-            this.Post = new Post();
+            this.NewComment = new Comment();
         }
 
-        public DetailsPostViewModel(Post post, Comment comment) {
-            this.Comment = comment;
+        public DetailsPostViewModel(Post post) {
             this.Post = post;
         }
 
         public Post Post { get; set; }
 
-        public Comment Comment { get; set; }
+        public Comment NewComment { get; set; }
 
     }
 

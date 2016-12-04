@@ -48,7 +48,7 @@
         public IActionResult Delete(Guid id) {
             var image = this.dataContext.Images.Single(i => i.Id == id);
             if (null != image) {
-                var viewModel = new ImageViewModel(image);
+                var viewModel = new DeleteImageViewModel(image);
                 return View(viewModel);
             } else {
                 return NotFound();
@@ -73,7 +73,7 @@
         [HttpGet]
         public IActionResult List() {
             var images = this.dataContext.Images.OrderBy(i => i.Name).ToList();
-            var viewModel = new ImagesViewModel(images);
+            var viewModel = new ListImagesViewModel(images);
             return View(viewModel);
         }
 

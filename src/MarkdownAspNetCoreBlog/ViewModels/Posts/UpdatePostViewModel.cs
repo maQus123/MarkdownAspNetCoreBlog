@@ -4,18 +4,22 @@
     using Models;
     using System.Collections.Generic;
 
-    public class CreateOrUpdatePostViewModel {
 
-        public CreateOrUpdatePostViewModel() {
-            this.Post = new Post();
+    public class UpdatePostViewModel {
+
+        public UpdatePostViewModel() {
             this.AllTags = new List<SelectListItem>();
             this.SelectedTags = new List<string>();
         }
 
-        public CreateOrUpdatePostViewModel(Post post, List<SelectListItem> allTags, List<string> selectedTags) {
+        public UpdatePostViewModel(Post post, List<Tag> tags) : this() {
             this.Post = post;
-            this.AllTags = allTags;
-            this.SelectedTags = selectedTags;
+            foreach (var tag in tags) {
+                this.AllTags.Add(new SelectListItem { Text = tag.Title, Value = tag.Id.ToString() });
+            }
+            foreach (var postTag in post.PostTags) {
+                this.SelectedTags.Add(postTag.TagId.ToString());
+            }
         }
 
         public Post Post { get; set; }

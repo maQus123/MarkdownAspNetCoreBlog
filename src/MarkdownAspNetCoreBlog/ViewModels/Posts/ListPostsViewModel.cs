@@ -3,13 +3,9 @@
     using Models;
     using System.Collections.Generic;
 
-    public class PostsViewModel {
+    public class ListPostsViewModel {
 
-        public PostsViewModel() {
-            this.Posts = new List<Post>();
-        }
-
-        public PostsViewModel(List<Post> posts) {
+        public ListPostsViewModel(List<Post> posts) {
             this.Posts = posts;
         }
 

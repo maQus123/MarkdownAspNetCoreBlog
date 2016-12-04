@@ -3,13 +3,13 @@
     using Models;
     using System.Collections.Generic;
 
-    public class TagsViewModel {
+    public class ListTagsViewModel {
 
-        public TagsViewModel() {
+        public ListTagsViewModel() {
             this.Tags = new List<Tag>();
         }
 
-        public TagsViewModel(List<Tag> tags) {
+        public ListTagsViewModel(List<Tag> tags) {
             this.Tags = tags;
         }
 

@@ -9,15 +9,16 @@
 
         public void ConfigureServices(IServiceCollection services) {
             services.AddMvc();
+            services.Configure<RouteOptions>(options => { options.AppendTrailingSlash = true; options.LowercaseUrls = true; });
+            services.AddResponseCompression();
+            services.AddResponseCaching();
             services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase());
-            services.Configure<RouteOptions>(options => {
-                options.AppendTrailingSlash = true;
-                options.LowercaseUrls = true;
-            });
             return;
         }
 
         public void Configure(IApplicationBuilder app) {
+            app.UseResponseCompression();
+            app.UseResponseCaching();
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseMvc(m => {

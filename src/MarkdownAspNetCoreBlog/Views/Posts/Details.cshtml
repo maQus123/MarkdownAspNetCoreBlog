@@ -15,16 +15,16 @@
 
     <h3>Kommentare</h3>
     @foreach (var comment in Model.Post.Comments) {
-        <p>@comment.Content (von @comment.AuthorName am @comment.CreatedAt.ToString()</p>
+        <p>@comment.Content (von @comment.AuthorName am @comment.CreatedAt.ToString())</p>
     }
     <form method="post" asp-action="Details" asp-controller="Posts">
         <div class="form-group">
             <label>Name</label>
-            <input class="form-control" type="text" asp-for="@Model.Comment.AuthorName" required />
+            <input class="form-control" type="text" asp-for="@Model.NewComment.AuthorName" required />
         </div>
         <div class="form-group">
             <label>Kommentar</label>
-            <textarea class="form-control" asp-for="@Model.Comment.Content" rows="3" draggable="false" required></textarea>
+            <textarea class="form-control" asp-for="@Model.NewComment.Content" rows="3" draggable="false" required></textarea>
         </div>
         <button type="submit" class="btn btn-default btn-sm">Hinzufügen</button>
     </form>

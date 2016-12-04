@@ -2,13 +2,9 @@
 
     using Models;
 
-    public class TagViewModel {
+    public class DeleteTagViewModel {
 
-        public TagViewModel() {
-            this.Tag = new Tag();
-        }
-
-        public TagViewModel(Tag tag) {
+        public DeleteTagViewModel(Tag tag) {
             this.Tag = tag;
         }
 

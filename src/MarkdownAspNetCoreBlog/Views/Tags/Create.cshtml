@@ -1,4 +1,4 @@
-﻿@model MarkdownAspNetCoreBlog.ViewModels.Tags.TagViewModel
+﻿@model MarkdownAspNetCoreBlog.ViewModels.Tags.CreateTagViewModel
 
 @{
     ViewData["Title"] = "Neuer Tag";
@@ -8,7 +8,7 @@
     <form method="post" asp-action="Create" asp-controller="Tags">
         <div class="form-group">
             <label>Titel</label>
-            <input type="text" class="form-control" asp-for="@Model.Tag.Title" required />
+            <input type="text" class="form-control" asp-for="@Model.NewTag.Title" required />
         </div>
         <button type="submit" class="btn btn-primary">Speichern</button>
         <a asp-route="list-tags" role="button" class="btn btn-default">Abbrechen</a>

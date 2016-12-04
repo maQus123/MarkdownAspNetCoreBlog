@@ -21,9 +21,9 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Tag")] TagViewModel viewModel) {
+        public IActionResult Create([Bind("NewTag")] CreateTagViewModel viewModel) {
             if (ModelState.IsValid) {
-                var tag = new Tag(viewModel.Tag);
+                var tag = new Tag(viewModel.NewTag);
                 this.dataContext.Tags.Add(tag);
                 this.dataContext.SaveChanges();
                 return RedirectToAction("List");
@@ -36,7 +36,7 @@
         public IActionResult Delete(Guid id) {
             var tag = this.dataContext.Tags.Single(t => t.Id == id);
             if (null != tag) {
-                var viewModel = new TagViewModel(tag);
+                var viewModel = new DeleteTagViewModel(tag);
                 return View(viewModel);
             } else {
                 return NotFound();
@@ -59,7 +59,7 @@
         [HttpGet]
         public IActionResult List() {
             var tags = this.dataContext.Tags.OrderBy(t => t.Title).ToList();
-            var viewModel = new TagsViewModel(tags);
+            var viewModel = new ListTagsViewModel(tags);
             return View(viewModel);
         }
 
@@ -67,7 +67,7 @@
         public IActionResult Update(Guid id) {
             var tag = this.dataContext.Tags.Single(t => t.Id == id);
             if (null != tag) {
-                var viewModel = new TagViewModel(tag);
+                var viewModel = new UpdateTagViewModel(tag);
                 return View(viewModel);
             } else {
                 return NotFound();
@@ -76,7 +76,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(Guid id, [Bind("Tag")] TagViewModel viewModel) {
+        public IActionResult Update(Guid id, [Bind("Tag")] UpdateTagViewModel viewModel) {
             var existingTag = this.dataContext.Tags.Single(t => t.Id == id);
             if (null != existingTag) {
                 existingTag.UpdateFrom(viewModel.Tag);

@@ -3,13 +3,13 @@
     using Models;
     using System.Collections.Generic;
 
-    public class ImagesViewModel {
+    public class ListImagesViewModel {
 
-        public ImagesViewModel() {
+        public ListImagesViewModel() {
             this.Images = new List<Image>();
         }
 
-        public ImagesViewModel(List<Image> images) {
+        public ListImagesViewModel(List<Image> images) {
             this.Images = images;
         }
 

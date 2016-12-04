@@ -2,13 +2,9 @@
 
     using Models;
 
-    public class ImageViewModel {
+    public class DeleteImageViewModel {
 
-        public ImageViewModel() {
-            this.Image = new Image();
-        }
-
-        public ImageViewModel(Image image) {
+        public DeleteImageViewModel(Image image) {
             this.Image = image;
         }
 
