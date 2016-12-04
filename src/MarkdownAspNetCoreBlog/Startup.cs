@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Routing;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+    using Repositories;
 
     public class Startup {
 
@@ -13,6 +14,7 @@
             services.AddResponseCompression();
             services.AddResponseCaching();
             services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase());
+            services.AddScoped<ITagRepository, TagRepository>();
             return;
         }
 

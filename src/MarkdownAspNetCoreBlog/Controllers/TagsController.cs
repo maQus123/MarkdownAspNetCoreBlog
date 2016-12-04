@@ -2,16 +2,16 @@
 
     using Microsoft.AspNetCore.Mvc;
     using Models;
+    using Repositories;
     using System;
-    using System.Linq;
     using ViewModels.Tags;
 
     public class TagsController : Controller {
 
-        private DataContext dataContext;
+        private readonly ITagRepository tagRepository;
 
-        public TagsController(DataContext dataContext) {
-            this.dataContext = dataContext;
+        public TagsController(ITagRepository tagRepository) {
+            this.tagRepository = tagRepository;
         }
 
         [HttpGet]
@@ -24,8 +24,7 @@
         public IActionResult Create([Bind("NewTag")] CreateTagViewModel viewModel) {
             if (ModelState.IsValid) {
                 var tag = new Tag(viewModel.NewTag);
-                this.dataContext.Tags.Add(tag);
-                this.dataContext.SaveChanges();
+                this.tagRepository.Add(tag);
                 return RedirectToAction("List");
             } else {
                 return View(viewModel);
@@ -34,7 +33,7 @@
 
         [HttpGet]
         public IActionResult Delete(Guid id) {
-            var tag = this.dataContext.Tags.Single(t => t.Id == id);
+            var tag = this.tagRepository.GetById(id);
             if (null != tag) {
                 var viewModel = new DeleteTagViewModel(tag);
                 return View(viewModel);
@@ -46,10 +45,9 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(Guid id) {
-            var tag = this.dataContext.Tags.Single(t => t.Id == id);
+            var tag = this.tagRepository.GetById(id);
             if (null != tag) {
-                this.dataContext.Tags.Remove(tag);
-                this.dataContext.SaveChanges();
+                this.tagRepository.Remove(tag);
                 return RedirectToAction("List");
             } else {
                 return NotFound();
@@ -58,14 +56,14 @@
 
         [HttpGet]
         public IActionResult List() {
-            var tags = this.dataContext.Tags.OrderBy(t => t.Title).ToList();
+            var tags = this.tagRepository.GetAll();
             var viewModel = new ListTagsViewModel(tags);
             return View(viewModel);
         }
 
         [HttpGet]
         public IActionResult Update(Guid id) {
-            var tag = this.dataContext.Tags.Single(t => t.Id == id);
+            var tag = this.tagRepository.GetById(id);
             if (null != tag) {
                 var viewModel = new UpdateTagViewModel(tag);
                 return View(viewModel);
@@ -77,11 +75,10 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Update(Guid id, [Bind("Tag")] UpdateTagViewModel viewModel) {
-            var existingTag = this.dataContext.Tags.Single(t => t.Id == id);
+            var existingTag = this.tagRepository.GetById(id);
             if (null != existingTag) {
                 existingTag.UpdateFrom(viewModel.Tag);
-                this.dataContext.Tags.Update(existingTag);
-                this.dataContext.SaveChanges();
+                this.tagRepository.Update(existingTag);
                 return RedirectToAction("List");
             } else {
                 return View(viewModel);

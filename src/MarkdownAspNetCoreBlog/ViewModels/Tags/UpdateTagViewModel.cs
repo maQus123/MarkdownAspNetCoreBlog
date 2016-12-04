@@ -4,6 +4,10 @@
 
     public class UpdateTagViewModel {
 
+        public UpdateTagViewModel() {
+
+        }
+
         public UpdateTagViewModel(Tag tag) {
             this.Tag = tag;
         }
