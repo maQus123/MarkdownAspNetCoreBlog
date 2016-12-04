@@ -4,19 +4,19 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Models;
+    using Repositories.Images;
     using System;
     using System.IO;
-    using System.Linq;
     using ViewModels.Images;
 
     public class ImagesController : Controller {
 
-        private DataContext dataContext;
+        private readonly IImageRepository imageRepository;
         private IHostingEnvironment environment;
         private const string IMAGE_FOLDER = "img";
 
-        public ImagesController(DataContext dataContext, IHostingEnvironment environment) {
-            this.dataContext = dataContext;
+        public ImagesController(IImageRepository imageRepository, IHostingEnvironment environment) {
+            this.imageRepository = imageRepository;
             this.environment = environment;
         }
 
@@ -36,8 +36,7 @@
                 var image = new Image();
                 image.FolderName = IMAGE_FOLDER;
                 image.Name = file.FileName;
-                this.dataContext.Images.Add(image);
-                this.dataContext.SaveChanges();
+                this.imageRepository.Add(image);
                 return RedirectToAction("List");
             } else {
                 return View();
@@ -46,7 +45,7 @@
 
         [HttpGet]
         public IActionResult Delete(Guid id) {
-            var image = this.dataContext.Images.Single(i => i.Id == id);
+            var image = this.imageRepository.GetById(id);
             if (null != image) {
                 var viewModel = new DeleteImageViewModel(image);
                 return View(viewModel);
@@ -58,12 +57,11 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(Guid id) {
-            var image = this.dataContext.Images.Single(i => i.Id == id);
+            var image = this.imageRepository.GetById(id);
             if (null != image) {
                 var path = Path.Combine(this.environment.WebRootPath, image.FolderName, image.Name);
                 System.IO.File.Delete(path);
-                this.dataContext.Images.Remove(image);
-                this.dataContext.SaveChanges();
+                this.imageRepository.Remove(image);
                 return RedirectToAction("List");
             } else {
                 return NotFound();
@@ -72,7 +70,7 @@
 
         [HttpGet]
         public IActionResult List() {
-            var images = this.dataContext.Images.OrderBy(i => i.Name).ToList();
+            var images = this.imageRepository.GetAll();
             var viewModel = new ListImagesViewModel(images);
             return View(viewModel);
         }

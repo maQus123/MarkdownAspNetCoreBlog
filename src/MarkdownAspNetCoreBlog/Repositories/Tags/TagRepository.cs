@@ -1,4 +1,4 @@
-﻿namespace MarkdownAspNetCoreBlog.Repositories {
+﻿namespace MarkdownAspNetCoreBlog.Repositories.Tags {
 
     using Models;
     using System;

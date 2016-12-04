@@ -2,7 +2,7 @@
 
     using Microsoft.AspNetCore.Mvc;
     using Models;
-    using Repositories;
+    using Repositories.Tags;
     using System;
     using ViewModels.Tags;
 

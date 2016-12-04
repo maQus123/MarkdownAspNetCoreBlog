@@ -4,7 +4,9 @@
     using Microsoft.AspNetCore.Routing;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
-    using Repositories;
+    using Repositories.Images;
+    using Repositories.Posts;
+    using Repositories.Tags;
 
     public class Startup {
 
@@ -15,6 +17,8 @@
             services.AddResponseCaching();
             services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase());
             services.AddScoped<ITagRepository, TagRepository>();
+            services.AddScoped<IImageRepository, ImageRepository>();
+            services.AddScoped<IPostRepository, PostRepository>();
             return;
         }
 
