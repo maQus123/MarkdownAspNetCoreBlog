@@ -1,4 +1,6 @@
-﻿@{
+﻿@model MarkdownAspNetCoreBlog.ViewModels.Images.CreateImageViewModel
+
+@{
     ViewData["Title"] = "Neues Bild";
 }
 
@@ -6,7 +8,7 @@
     <form method="post" asp-action="Create" asp-controller="Images" enctype="multipart/form-data">
         <div class="form-group">
             <label>Bild</label>
-            <input type="file" name="File" required />
+            <input type="file" name="file" id="file" required />
         </div>        
         <button type="submit" class="btn btn-primary">Speichern</button>
         <a asp-route="list-images" role="button" class="btn btn-default">Abbrechen</a>

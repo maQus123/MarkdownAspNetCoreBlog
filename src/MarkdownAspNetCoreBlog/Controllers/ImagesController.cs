@@ -7,6 +7,7 @@
     using Repositories.Images;
     using System;
     using System.IO;
+    using System.Threading.Tasks;
     using ViewModels.Images;
 
     public class ImagesController : Controller {
@@ -27,15 +28,13 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("File")] IFormFile file) {
+        public async Task<IActionResult> Create(CreateImageViewModel viewModel, IFormFile file) {
             if (file.Length > 0) {
                 var folder = Path.Combine(this.environment.WebRootPath, IMAGE_FOLDER);
-                using (var fileStream = new FileStream(Path.Combine(folder, file.FileName), FileMode.Create)) {
-                    file.CopyTo(fileStream);
+                using (var fileStream = new FileStream(Path.Combine(folder, (string)file.FileName), FileMode.Create)) {
+                    await file.CopyToAsync(fileStream);
                 }
-                var image = new Image();
-                image.FolderName = IMAGE_FOLDER;
-                image.Name = file.FileName;
+                var image = new Image() { FolderName = IMAGE_FOLDER, Name = file.FileName };
                 this.imageRepository.Add(image);
                 return RedirectToAction("List");
             } else {
