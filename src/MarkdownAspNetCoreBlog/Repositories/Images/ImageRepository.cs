@@ -20,7 +20,7 @@
         }
 
         public List<Image> GetAll() {
-            var images = this.dataContext.Images.OrderBy(i => i.Name).ToList();
+            var images = this.dataContext.Images.OrderBy(i => i.Title).ToList();
             return images;
         }
 

@@ -10,10 +10,10 @@
         @foreach (var image in Model.Images) {
             <div class="col-xs-6 col-md-3">
                 <div class="thumbnail">
-                    <a href="~/@image.FolderName/@image.Name">
-                        <img src="~/@image.FolderName/@image.Name" alt="@image.Name" asp-append-version="true">
+                    <a href="~/@image.FilePath">
+                        <img src="~/@image.FilePath" alt="@image.Title" asp-append-version="true">
                     </a>
-                    @image.FolderName/@image.Name | <a asp-route="delete-image" asp-route-id="@image.Id">Löschen</a>
+                    @image.FilePath | <a asp-route="delete-image" asp-route-id="@image.Id">Löschen</a>
                 </div>
             </div>
             i++;

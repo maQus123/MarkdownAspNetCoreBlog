@@ -28,13 +28,14 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateImageViewModel viewModel, IFormFile file) {
-            if (file.Length > 0) {
-                var folder = Path.Combine(this.environment.WebRootPath, IMAGE_FOLDER);
-                using (var fileStream = new FileStream(Path.Combine(folder, (string)file.FileName), FileMode.Create)) {
+        public async Task<IActionResult> Create([Bind("Image")] CreateImageViewModel viewModel, IFormFile file) {
+            if (file.Length > 0 && ModelState.IsValid) {
+                var filePath = Path.Combine(IMAGE_FOLDER, file.FileName);
+                using (var fileStream = new FileStream(Path.Combine(this.environment.WebRootPath, filePath), FileMode.Create)) {
                     await file.CopyToAsync(fileStream);
                 }
-                var image = new Image() { FolderName = IMAGE_FOLDER, Name = file.FileName };
+                var image = viewModel.Image;
+                image.FilePath = filePath;
                 this.imageRepository.Add(image);
                 return RedirectToAction("List");
             } else {
@@ -58,7 +59,7 @@
         public IActionResult DeleteConfirmed(Guid id) {
             var image = this.imageRepository.GetById(id);
             if (null != image) {
-                var path = Path.Combine(this.environment.WebRootPath, image.FolderName, image.Name);
+                var path = Path.Combine(this.environment.WebRootPath, image.FilePath);
                 System.IO.File.Delete(path);
                 this.imageRepository.Remove(image);
                 return RedirectToAction("List");

@@ -1,12 +1,12 @@
 ﻿@model MarkdownAspNetCoreBlog.ViewModels.Images.DeleteImageViewModel
 
 @{
-    ViewData["Title"] = "Bild löschen: " + Model.Image.Name;
+    ViewData["Title"] = "Bild löschen: " + Model.Image.Title;
 }
 
 <div class="container">
     <form method="post" asp-action="DeleteConfirmed" asp-controller="Images">
-        <p>Bild '@Model.Image.FolderName/@Model.Image.Name' wirklich löschen?</p>
+        <p>Bild '@Model.Image.Title' wirklich löschen?</p>
         <button type="submit" class="btn btn-danger">Löschen</button>
         <a asp-route="list-images" role="button" class="btn btn-default">Abbrechen</a>
     </form>

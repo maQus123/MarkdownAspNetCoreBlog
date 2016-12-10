@@ -5,6 +5,7 @@
     using Repositories.Posts;
     using Repositories.Tags;
     using System;
+    using System.Collections.Generic;
     using ViewModels.Posts;
 
     public class PostsController : Controller {
@@ -27,7 +28,7 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("NewPost,SelectedTags")] CreatePostViewModel viewModel) {
-            if (ModelState.IsValid) {
+            if (ModelState.IsValid && !this.postRepository.IsPostTitleExisting(viewModel.NewPost.Title)) {
                 var post = new Post(viewModel.NewPost);
                 this.postRepository.Add(post);
                 Guid id;
@@ -35,7 +36,7 @@
                     if (Guid.TryParse(selectedTag, out id)) {
                         var tag = this.tagRepository.GetById(id);
                         var postTag = new PostTag(post, tag);
-                        this.postRepository.AddPostTagRelationship(postTag);
+                        this.postRepository.AddPostTag(postTag);
                     }
                 }
                 this.postRepository.SaveChanges();
@@ -96,8 +97,14 @@
         }
 
         [HttpGet]
-        public IActionResult Index() {
-            var posts = this.postRepository.GetAllPublished();
+        public IActionResult Index(string slug = "") {
+            List<Post> posts;
+            if (string.IsNullOrWhiteSpace(slug)) {
+                posts = this.postRepository.GetAllPublished();
+            } else {
+                var tag = this.tagRepository.GetBySlug(slug);
+                posts = this.postRepository.GetAllPublished(tag);
+            }
             var viewModel = new ListPostsViewModel(posts);
             return View(viewModel);
         }
@@ -129,13 +136,13 @@
                 if (null != post && id == post.Id) {
                     post.UpdateFrom(viewModel.Post);
                     this.postRepository.Update(post);
-                    var postTags = this.postRepository.GetPostTagRelationshipsByPostId(id);
+                    var postTags = this.postRepository.GetPostTags(id);
                     this.postRepository.Remove(postTags);
                     this.postRepository.SaveChanges();
                     foreach (var selectedTag in viewModel.SelectedTags) {
                         var tag = this.tagRepository.GetById(Guid.Parse(selectedTag));
                         var postTag = new PostTag(post, tag);
-                        this.postRepository.AddPostTagRelationship(postTag);
+                        this.postRepository.AddPostTag(postTag);
                     }
                     this.postRepository.SaveChanges();
                     return RedirectToAction("List");

@@ -1,8 +1,14 @@
-﻿namespace MarkdownAspNetCoreBlog.ViewModels.Images {
+﻿using MarkdownAspNetCoreBlog.Models;
+
+namespace MarkdownAspNetCoreBlog.ViewModels.Images {
 
     public class CreateImageViewModel {
 
-        //TODO    
+        public CreateImageViewModel() {
+            this.Image = new Image();
+        }
+
+        public Image Image { get; set; }
 
     }
 

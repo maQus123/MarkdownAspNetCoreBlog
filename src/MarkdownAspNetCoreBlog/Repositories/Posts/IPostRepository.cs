@@ -7,12 +7,14 @@
     public interface IPostRepository {
 
         void Add(Post post);
-        void AddPostTagRelationship(PostTag postTag);
+        void AddPostTag(PostTag postTag);
         List<Post> GetAll();
         List<Post> GetAllPublished();
+        List<Post> GetAllPublished(Tag tag);
         Post GetById(Guid id);
         Post GetByUrl(string year, string month, string slug);
-        List<PostTag> GetPostTagRelationshipsByPostId(Guid id);
+        List<PostTag> GetPostTags(Guid id);
+        bool IsPostTitleExisting(string title);
         void Remove(List<PostTag> postTags);
         void Remove(Post post);
         void SaveChanges();

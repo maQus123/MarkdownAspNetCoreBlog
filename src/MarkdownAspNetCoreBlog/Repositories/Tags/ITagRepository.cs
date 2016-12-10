@@ -9,6 +9,7 @@
         void Add(Tag tag);
         List<Tag> GetAll();
         Tag GetById(Guid id);
+        Tag GetBySlug(string slug);
         void Remove(Tag tag);
         void SaveChanges();
         void Update(Tag tag);

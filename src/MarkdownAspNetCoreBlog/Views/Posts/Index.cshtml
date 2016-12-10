@@ -10,7 +10,7 @@
         <p>
             @post.CreatedAt.ToString("d. MMMM yyyy") von <a href="#">maQus</a> -
             @foreach (var postTag in post.PostTags) {
-                @postTag.Tag.Title
+                <a asp-route="index-tag" asp-route-slug="@postTag.Tag.Slug()">@postTag.Tag.Title</a> 
             }
         </p>
         <md>@post.Content</md>

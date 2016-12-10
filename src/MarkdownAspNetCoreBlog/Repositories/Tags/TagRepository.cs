@@ -29,6 +29,11 @@
             return tag;
         }
 
+        public Tag GetBySlug(string slug) {
+            var tag = this.dataContext.Tags.SingleOrDefault(t => t.Slug() == slug);
+            return tag;
+        }
+
         public void Remove(Tag tag) {
             this.dataContext.Tags.Remove(tag);
             this.SaveChanges();

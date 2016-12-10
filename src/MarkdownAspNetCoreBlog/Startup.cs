@@ -34,6 +34,11 @@
                     template: "",
                     defaults: new { controller = "Posts", action = "Index" });
                 m.MapRoute(
+                    name: "index-tag",
+                    template: "thema/{slug}",
+                    constraints: new { slug = @"^[a-z0-9-]+$" },
+                    defaults: new { controller = "Posts", action = "Index" });
+                m.MapRoute(
                     name: "details",
                     template: "{year}/{month}/{slug}",
                     constraints: new { year = @"\d{4}", month = @"\d{2}", slug = @"^[a-z0-9-]+$" },

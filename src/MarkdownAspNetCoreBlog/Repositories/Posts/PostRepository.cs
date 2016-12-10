@@ -19,7 +19,7 @@
             return;
         }
 
-        public void AddPostTagRelationship(PostTag postTag) {
+        public void AddPostTag(PostTag postTag) {
             this.dataContext.PostTags.Add(postTag);
             return;
         }
@@ -41,6 +41,20 @@
             return posts;
         }
 
+        public List<Post> GetAllPublished(Tag tag) {
+            var resultPosts = new List<Post>();
+            var allPosts = this.GetAllPublished();
+            foreach (var post in allPosts) {
+                foreach (var postTag in post.PostTags) {
+                    if (postTag.Tag == tag) {
+                        resultPosts.Add(post);
+                        break;
+                    }
+                }
+            }
+            return resultPosts;
+        }
+
         public Post GetById(Guid id) {
             var post = this.dataContext.Posts
                 .Include(p => p.PostTags)
@@ -57,11 +71,20 @@
             return post;
         }
 
-        public List<PostTag> GetPostTagRelationshipsByPostId(Guid id) {
+        public List<PostTag> GetPostTags(Guid id) {
             var postTags = this.dataContext.PostTags
                 .Where(p => p.PostId == id)
                 .ToList();
             return postTags;
+        }
+
+        public bool IsPostTitleExisting(string title) {
+            var exists = false;
+            var postWithSameTitle = this.dataContext.Posts.Where(p => p.Title == title).Count();
+            if (postWithSameTitle > 0) {
+                exists = true;
+            }
+            return exists;
         }
 
         public void Remove(Post post) {
