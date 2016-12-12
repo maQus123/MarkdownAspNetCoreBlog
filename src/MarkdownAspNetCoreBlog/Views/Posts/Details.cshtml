@@ -3,29 +3,42 @@
 @{
     ViewData["Title"] = Model.Post.Title;
 }
-<div class="container">
-    <h2>@Model.Post.Title</h2>
-    <p>
-        @Model.Post.CreatedAt.ToString("d. MMMM yyyy") von <a href="#">maQus</a> -
-        @foreach (var postTag in Model.Post.PostTags) {
-            @postTag.Tag.Title
-        }
-    </p>
-    <md>@Model.Post.Content</md>
 
-    <h3>Kommentare</h3>
-    @foreach (var comment in Model.Post.Comments) {
-        <p>@comment.Content (von @comment.AuthorName am @comment.CreatedAt.ToString())</p>
-    }
-    <form method="post" asp-action="Details" asp-controller="Posts">
-        <div class="form-group">
-            <label>Name</label>
-            <input class="form-control" type="text" asp-for="@Model.NewComment.AuthorName" required />
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>@Model.Post.Title</h1>
+                    <span class="meta">@Model.Post.CreatedAt.ToString("d. MMMM yyyy") von <a href="#">maQus</a></span>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label>Kommentar</label>
-            <textarea class="form-control" asp-for="@Model.NewComment.Content" rows="3" draggable="false" required></textarea>
+    </div>
+</header>
+
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <md>@Model.Post.Content</md>
+                <hr />
+                <h3>Kommentare</h3>
+                @foreach (var comment in Model.Post.Comments) {
+                    <p>@comment.Content (Von @comment.AuthorName am @comment.CreatedAt.ToString("d.MMMM yyyy"))</p>
+                }
+                <form method="post" asp-action="Details" asp-controller="Posts">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input class="form-control" type="text" asp-for="@Model.NewComment.AuthorName" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Kommentar</label>
+                        <textarea class="form-control" asp-for="@Model.NewComment.Content" rows="3" draggable="false" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-default btn-sm">Hinzufügen</button>
+                </form>
+            </div>
         </div>
-        <button type="submit" class="btn btn-default btn-sm">Hinzufügen</button>
-    </form>
-</div>
+    </div>
+</article>

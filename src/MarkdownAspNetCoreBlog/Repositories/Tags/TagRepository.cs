@@ -1,5 +1,6 @@
 ﻿namespace MarkdownAspNetCoreBlog.Repositories.Tags {
 
+    using Microsoft.EntityFrameworkCore;
     using Models;
     using System;
     using System.Collections.Generic;
@@ -20,7 +21,10 @@
         }
 
         public List<Tag> GetAll() {
-            var tags = this.dataContext.Tags.OrderBy(t => t.Title).ToList();
+            var tags = this.dataContext.Tags
+                .Include(t => t.PostTags)
+                .OrderByDescending(t => t.PostTags.Count)
+                .ToList();
             return tags;
         }
 

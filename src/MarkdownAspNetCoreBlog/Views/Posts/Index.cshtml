@@ -4,15 +4,41 @@
     ViewData["Title"] = "maQus Blog";
 }
 
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading">
+                    <h1>@ViewData["Title"]</h1>
+                    <hr class="small">
+                    <span class="subheading">Gedanken, damit ich mich besser fühl'</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
 <div class="container">
-    @foreach (var post in Model.Posts) {
-        <h2><a asp-route="details" asp-route-year="@post.CreatedAt.Year.ToString()" asp-route-month="@post.CreatedAt.Month.ToString("00")" asp-route-slug="@post.Slug()">@post.Title</a></h2>
-        <p>
-            @post.CreatedAt.ToString("d. MMMM yyyy") von <a href="#">maQus</a> -
-            @foreach (var postTag in post.PostTags) {
-                <a asp-route="index-tag" asp-route-slug="@postTag.Tag.Slug()">@postTag.Tag.Title</a> 
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            @foreach (var post in Model.Posts) {
+                <div class="post-preview">
+                    <a asp-route="details" asp-route-year="@post.CreatedAt.Year.ToString()" asp-route-month="@post.CreatedAt.Month.ToString("00")" asp-route-slug="@post.Slug()">
+                        <h2 class="post-title">
+                            @post.Title
+                        </h2>
+                    </a>
+                    <p class="post-meta">
+                        @foreach (var postTag in post.PostTags) {
+                            <a asp-route="index-tag" asp-route-slug="@postTag.Tag.Slug()"><span class="glyphicon glyphicon-tag"></span>@postTag.Tag.Title</a> 
+                        }
+                        <br />
+                        @post.CreatedAt.ToString("d. MMMM yyyy") von <a href="#">maQus</a>
+                    </p>
+                </div>
+                <hr>
             }
-        </p>
-        <md>@post.Content</md>
-    }
+        </div>
+    </div>
 </div>
+

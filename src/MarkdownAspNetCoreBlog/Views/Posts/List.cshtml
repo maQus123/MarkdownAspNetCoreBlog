@@ -4,27 +4,54 @@
     ViewData["Title"] = "Posts verwalten";
 }
 
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading">
+                    <h1>@ViewData["Title"]</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
 
-<table>
-    <tr>
-        <th>Nr.</th>
-        <th>Title</th>
-        <th>Datum</th>
-        <th>Veröffentlicht</th>
-        <th>Tags</th>
-        <td></td>
-    </tr>
-    @{int i = 1;}
-    @foreach (var post in Model.Posts) {
-        <tr>
-            <td>@i</td>
-            <td>@post.Title</td>
-            <td>@post.CreatedAt.ToString("d MM yyyy hh:mm")</td>
-            <td>@post.IsPublished.ToString()</td>
-            <td>@post.PostTags.Count</td>
-            <td><a asp-route="update-post" asp-route-id="@post.Id">Bearbeiten</a> | <a asp-route="delete-post" asp-route-id="@post.Id">Löschen</a></td>
-        </tr>
-        i++;
-    }
-</table>
-<a class="btn btn-primary" asp-route="create-post" role="button">Neuen Post</a>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tr>
+                        <th>Title</th>
+                        <th>Datum</th>
+                        <th></th>
+                    </tr>
+                    @if (Model.Posts.Count == 0) {
+                        <tr>
+                            <td colspan="5"><i>Keine Posts verfügbar</i></td>
+                        </tr>
+                    }
+                    @foreach (var post in Model.Posts) {
+                        <tr>
+                            <td>
+                                @post.Title
+                                @if (post.IsPublished) {
+                                     <span class="glyphicon glyphicon-eye-open"></span>
+                                } else {
+                                     <span class="glyphicon glyphicon-eye-close"></span>
+                                }
+                            </td>
+                            <td>@post.CreatedAt.ToString("d.MM.yyyy")</td>
+                            <td><a class="btn btn-default btn-sm" asp-route="update-post" asp-route-id="@post.Id">Bearbeiten</a> <a class="btn btn-danger btn-sm" asp-route="delete-post" asp-route-id="@post.Id">Löschen</a></td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <a class="btn btn-primary btn-lg" role="button" asp-route="create-post">Neuer Post</a>
+        </div>
+    </div>
+</div>

@@ -4,26 +4,42 @@
     ViewData["Title"] = "Neuer Post";
 }
 
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading">
+                    <h1>@ViewData["Title"]</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
 <div class="container">
-    <form method="post" asp-action="Create" asp-controller="Posts">
-        <div class="form-group">
-            <label>Titel</label>
-            <input type="text" class="form-control" asp-for="@Model.NewPost.Title" required />
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <form method="post" asp-action="Create" asp-controller="Posts">
+                <div class="form-group">
+                    <label>Titel</label>
+                    <input type="text" class="form-control" asp-for="@Model.NewPost.Title" required />
+                </div>
+                <div class="form-group">
+                    <label>Inhalt</label>
+                    <textarea class="form-control" asp-for="@Model.NewPost.Content" rows="10" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Tags</label>
+                    <select asp-for="@Model.SelectedTags" asp-items="@Model.AllTags" class="form-control"></select>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" asp-for="@Model.NewPost.IsPublished"> Veröffentlichen
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg">Speichern</button>
+                <a asp-route="list-posts" role="button" class="btn btn-default btn-lg">Abbrechen</a>
+            </form>
         </div>
-        <div class="form-group">
-            <label>Inhalt</label>
-            <textarea class="form-control" asp-for="@Model.NewPost.Content" rows="10" required></textarea>
-        </div>
-        <div class="form-group">
-            <label>Tags</label>
-            <select asp-for="@Model.SelectedTags" asp-items="@Model.AllTags" class="form-control"></select>
-        </div>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" asp-for="@Model.NewPost.IsPublished"> Veröffentlichen
-            </label>
-        </div>
-        <button type="submit" class="btn btn-primary">Speichern</button>
-        <a asp-route="list-posts" role="button" class="btn btn-default">Abbrechen</a>
-    </form>
+    </div>
 </div>

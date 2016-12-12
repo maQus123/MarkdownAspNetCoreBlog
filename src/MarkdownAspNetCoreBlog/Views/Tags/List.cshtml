@@ -4,15 +4,47 @@
     ViewData["Title"] = "Tags verwalten";
 }
 
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading">
+                    <h1>@ViewData["Title"]</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
 <div class="container">
     <div class="row">
-        <ul>
-            @{int i = 1;}
-            @foreach (var tag in Model.Tags) {
-                <li>@tag.Title - <a asp-route="update-tag" asp-route-id="@tag.Id">Bearbeiten</a> | <a asp-route="delete-tag" asp-route-id="@tag.Id">Löschen</a></li>
-                i++;
-            }
-        </ul>
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tr>
+                        <th>Tag</th>
+                        <th>Erstellt</th>
+                        <th></th>
+                    </tr>
+                    @if (Model.Tags.Count == 0) {
+                        <tr>
+                            <td colspan="3"><i>Keine Tags verfügbar</i></td>
+                        </tr>
+                    }
+                    @foreach (var tag in Model.Tags) {
+                        <tr>
+                            <td>@tag.Title <span class="badge">@tag.PostTags.Count.ToString()</span></td>
+                            <td>@tag.CreatedAt.ToString("d.MM.yyyy")</td>
+                            <td><a class="btn btn-default btn-sm" asp-route="update-tag" asp-route-id="@tag.Id">Bearbeiten</a> <a class="btn btn-danger btn-sm" asp-route="delete-tag" asp-route-id="@tag.Id">Löschen</a></td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
     </div>
-    <a class="btn btn-primary" asp-route="create-tag" role="button">Neuer Tag</a>
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <a class="btn btn-primary btn-lg" asp-route="create-tag" role="button">Neuer Tag</a>
+        </div>
+    </div>
 </div>

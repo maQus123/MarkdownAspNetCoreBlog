@@ -4,20 +4,38 @@
     ViewData["Title"] = "Bilder verwalten";
 }
 
-<div class="container">
-    <div class="row">
-        @{int i = 1;}
-        @foreach (var image in Model.Images) {
-            <div class="col-xs-6 col-md-3">
-                <div class="thumbnail">
-                    <a href="~/@image.FilePath">
-                        <img src="~/@image.FilePath" alt="@image.Title" asp-append-version="true">
-                    </a>
-                    @image.FilePath | <a asp-route="delete-image" asp-route-id="@image.Id">Löschen</a>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading">
+                    <h1>@ViewData["Title"]</h1>
                 </div>
             </div>
-            i++;
-        }
+        </div>
     </div>
-    <a class="btn btn-primary" asp-route="create-image" role="button">Neues Bild</a>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            @{int i = 1;}
+            @foreach (var image in Model.Images) {
+                <div class="col-xs-6 col-md-3">
+                    <div class="thumbnail">
+                        <a href="~/@image.FilePath">
+                            <img src="~/@image.FilePath" alt="@image.Title" asp-append-version="true">
+                        </a>
+                        @image.FilePath | <a asp-route="delete-image" asp-route-id="@image.Id">Löschen</a>
+                    </div>
+                </div>
+                i++;
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <a class="btn btn-primary btn-lg" role="button" asp-route="create-image">Neues Bild</a>
+        </div>
+    </div>
 </div>

@@ -4,13 +4,29 @@
     ViewData["Title"] = "Neuer Tag";
 }
 
-<div class="container">
-    <form method="post" asp-action="Create" asp-controller="Tags">
-        <div class="form-group">
-            <label>Titel</label>
-            <input type="text" class="form-control" asp-for="@Model.NewTag.Title" required />
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading">
+                    <h1>@ViewData["Title"]</h1>
+                </div>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Speichern</button>
-        <a asp-route="list-tags" role="button" class="btn btn-default">Abbrechen</a>
-    </form>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <form method="post" asp-action="Create" asp-controller="Tags">
+                <div class="form-group">
+                    <label>Titel</label>
+                    <input type="text" class="form-control" asp-for="@Model.NewTag.Title" required />
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg">Speichern</button>
+                <a asp-route="list-tags" role="button" class="btn btn-default btn-lg">Abbrechen</a>
+            </form>
+        </div>
+    </div>
 </div>
