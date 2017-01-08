@@ -11,7 +11,7 @@
                 <div class="site-heading">
                     <h1>@ViewData["Title"]</h1>
                     <hr class="small">
-                    <span class="subheading">Gedanken, damit ich mich besser fühl'</span>
+                    <span class="subheading">Gedanken, damit ich mich besser fühle</span>
                 </div>
             </div>
         </div>
@@ -29,11 +29,10 @@
                         </h2>
                     </a>
                     <p class="post-meta">
+                        @post.CreatedAt.ToString("d. MMMM yyyy") von <a href="#">maQus</a>, Thema: 
                         @foreach (var postTag in post.PostTags) {
-                            <a asp-route="index-tag" asp-route-slug="@postTag.Tag.Slug()"><span class="glyphicon glyphicon-tag"></span>@postTag.Tag.Title</a> 
+                            <a asp-route="index-tag" asp-route-slug="@postTag.Tag.Slug()">@postTag.Tag.Title</a> 
                         }
-                        <br />
-                        @post.CreatedAt.ToString("d. MMMM yyyy") von <a href="#">maQus</a>
                     </p>
                 </div>
                 <hr>

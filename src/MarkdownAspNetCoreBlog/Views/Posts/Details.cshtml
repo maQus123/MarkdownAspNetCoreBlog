@@ -10,7 +10,12 @@
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
                     <h1>@Model.Post.Title</h1>
-                    <span class="meta">@Model.Post.CreatedAt.ToString("d. MMMM yyyy") von <a href="#">maQus</a></span>
+                    <span class="meta">
+                        @Model.Post.CreatedAt.ToString("d. MMMM yyyy") von <a href="#">maQus</a>, Thema:
+                        @foreach (var postTag in Model.Post.PostTags) {
+                            <a asp-route="index-tag" asp-route-slug="@postTag.Tag.Slug()">@postTag.Tag.Title</a>
+                        }
+                    </span>
                 </div>
             </div>
         </div>

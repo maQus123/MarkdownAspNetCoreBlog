@@ -98,6 +98,7 @@
 
         [HttpGet]
         public IActionResult Index(string slug = "") {
+            //var remoteIpAddress = this.Request.HttpContext.Connection.RemoteIpAddress;
             List<Post> posts;
             if (string.IsNullOrWhiteSpace(slug)) {
                 posts = this.postRepository.GetAllPublished();

@@ -1,24 +1,15 @@
 ﻿@model MarkdownAspNetCoreBlog.ViewModels.Tags.DeleteTagViewModel
 
 @{
-    ViewData["Title"] = "Tag löschen: " + Model.Tag.Title;
+    ViewData["Title"] = "Thema löschen: " + Model.Tag.Title;
 }
 
-<header class="intro-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>@ViewData["Title"]</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
+@Html.Partial("HeaderAdmin")
 
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <h1>@ViewData["Title"]</h1>
             <form method="post" asp-action="DeleteConfirmed" asp-controller="Tags">
                 <p>Tag '@Model.Tag.Title' wirklich löschen?</p>
                 <button type="submit" class="btn btn-danger btn-lg">Löschen</button>

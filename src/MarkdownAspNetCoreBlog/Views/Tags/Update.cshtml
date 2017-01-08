@@ -1,24 +1,15 @@
 ﻿@model MarkdownAspNetCoreBlog.ViewModels.Tags.UpdateTagViewModel
 
 @{
-    ViewData["Title"] = "Tag editieren: " + Model.Tag.Title;
+    ViewData["Title"] = "Thema editieren: " + Model.Tag.Title;
 }
 
-<header class="intro-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>@ViewData["Title"]</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
+@Html.Partial("HeaderAdmin")
 
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <h1>@ViewData["Title"]</h1>
             <form method="post" asp-action="Update" asp-controller="Tags">
                 <div class="form-group">
                     <label>Titel</label>
